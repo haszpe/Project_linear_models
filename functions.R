@@ -1,3 +1,4 @@
+#--------SPRAWDZENIE DANYCH----------------------------------------------------
 "Funkcja do sprawdzania danych
     - czu dane zostały poprawnie wczytane 
     - usuwa wiersze z brakującymi danymi
@@ -18,10 +19,24 @@ check <- function(data){
   else message('Number of rows that are deleted due to missing values:', del_rows)
 }
 
+#--------NORMALNOŚĆ ROZKŁADU---------------------------------------------------
+
+if_norm <- function() {
+  
+}
 
 
-" Testy T-Studenta
-    - jednej próby
+
+#--------JEDNORODNOŚĆ WARIANCJI------------------------------------------------
+
+homogen_var <- function() {
+  
+}
+
+
+
+#--------TESTY T-STUDENTA------------------------------------------------------
+    "- jednej próby
     - dwóch prób niezależnych
     - dwóch prób zależnych"
 
@@ -78,3 +93,30 @@ t_test_dwie_zal <- function(proba, proba2, alternatywa) {
 }
 
 
+#--------KORELACJA-------------------------------------------------------------
+    "- liniowa pearsona
+    - rang spearmana"
+
+correlation_spearman <- function(y, dane, ...) {
+  zmienne <- (...)
+  for (i in 1:length(zmienne_zal)){
+    stopifnot(is.numeric(zmienne_zal[i]))
+  }
+  
+  
+}
+correlation_spearman <- function(y, dane, ...) {
+  zmienne <- (...)
+  for (i in 1:length(zmienne_zal)){
+    stopifnot(is.numeric(zmienne_zal[i]))
+  }
+  
+}
+
+
+#--------ANALIZA WARIANCJI-----------------------------------------------------
+
+variance <- function() {
+  
+  
+}

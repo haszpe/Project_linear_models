@@ -1,9 +1,17 @@
+'AUTORZY:
+Krzysztof Jakubowski  121992
+Hanna Pęciak          113752 
+Zygmunt Łatyszewicz   121724'
+
+
+#------------------------------------------------------------------------------
 #Wczytanie pliku z danymi ze ścieżki podanej przez użytkownika  -
 #     > zdefiniować w dokumentacji format pliku csv
 
-#----WCZYTANIE FUNKCJI--------------------------------------------------------------------
 
-source("functions.R")
+#----WCZYTANIE FUNKCJI---------------------------------------------------------
+
+source("~/Documents/GitHub/Project_linear_models/functions.R")
 
 #-----------PROGRAM------------------------------------------------------------
 
@@ -16,18 +24,10 @@ data <- read.csv2(dta)
 check(data)
 
 
-"Co robimy?
-  -> test t_stud 1
-  -> test t_stud 2 niezal
-  -> test t_stud 2 zal
-  -> regresja liniowa 
-  -> anova
-  -> post hoc"
-
-
 #Wybór danych do analizy
 proba <- readline(prompt = "Jaką kolumnę z pliku wejściowego chcesz przeanalizować? \n 
                   *Pamiętaj, że musisz podać kolumnę z wartościami numerycznymi")
+
 
 check(data[proba])
 
