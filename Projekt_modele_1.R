@@ -1,7 +1,7 @@
 'AUTORZY:
 Krzysztof Jakubowski  121992
-Hanna Pƒôciak          113752 
-Zygmunt ≈Åatyszewicz   121724'
+Hanna PÍciak          113752 
+Zygmunt £atyszewicz   121724'
 
 
 #------------------------------------------------------------------------------

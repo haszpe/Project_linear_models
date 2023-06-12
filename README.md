@@ -1,11 +1,15 @@
 # Project_linear_models
 
-## Format pliku csv
+## Format pliku CSV
 
-Plik wejÅ›ciowy powinien skÅ‚adaÄ‡ siÄ™ z uzupeÅ‚nionych wartoÅ›ciami liczbowymi (NUMERIC) kolumnami i wierszami.
-KaÅ¼da kolumna powinna mieÄ‡ swojÄ… wÅ‚asnÄ… unikatowÄ… nazwÄ™.
-Jeden wiersz odpowiada jednej obserwacji. 
+Plik wejœciowy powinien sk³adaæ siê z wartosci w formacie liczbowymi (NUMERIC) uzupe³nionymi kolumnami i wierszami.
+- ka¿da kolumna powinna mieæ w³asna¹ unikatowa¹ nazwê,
+- jeden wiersz odpowiada jednej obserwacji,
 
 ## Cel
 
-Program ma na celu przeprowadzenie analizy wg. zaleceÅ„ uÅ¼ytkownika na podstawie podanych przez uÅ¼ytkownika danych. 
+Program ma na celu przeprowadzenie analizy wedle zaleceñ u¿ytkownika.
+Do zakresów analizy zaliczaj¹ siê:
+- 3 testy t-studenta,
+- regresja liniowa,
+- analiza wariancji,
