@@ -45,15 +45,13 @@ if (analiza == 'T-student') {
   t_stud <- readline(prompt = "Jaki test T-studenta chcesz przepowadzić?
                               Masz do wyboru: one-sample, two-sample independent, 
                               two-sample dependent")
-   
-   proba <- readline(prompt = 'JakÄ… zmiennÄ… chcesz przetestowaÄ‡?')
-   if_norm
-   mo <- readline(prompt = 'Testowana Ĺ›rednia:')
-   alt <-readline(prompt = 'Alternatywa:')
-   t_test_jedna_niezal(proba, mo, alt)
-  
   if (t_stud == 'one-sample') {
     print('one-sample')
+    proba <- readline(prompt = 'JakÄ… zmiennÄ… chcesz przetestowaÄ‡?')
+    if_norm
+    mo <- readline(prompt = 'Testowana Ĺ›rednia:')
+    alt <-readline(prompt = 'Alternatywa:')
+    t_test_jedna_niezal(proba, mo, alt)
   } else if (t_stud =='two-sample independent'){
     print("two-sample independent")
     proba_1 <-readline(prompt = 'PrĂłba pierwsza:')
