@@ -27,34 +27,26 @@ check(data)
 "Definiujemy zmiennÄ… funk, ktĂłra okreĹ›la jaka funkcja zostanie wykorzystana w
 naszym programie do przeprowadzenia danej analizy"
 
-
-
-
-
-
-
-
-
 analiza <- readline(prompt = "Jaką analizę chcesz przeprowadzić? \n
                           Do wyboru masz: T-student, regresja, ANOVA")
 
   
 if (analiza == 'T-student') {
-  print("robie t.test")
+  print("Przeprowadzam test T-studenta...")
   
-  t_stud <- readline(prompt = "Jaki test T-studenta chcesz przepowadzić?
+  t_stud <- readline(prompt = "Jaki test T-studenta chcesz przepowadzić? \n
                               Masz do wyboru: one-sample, two-sample independent, 
                               two-sample dependent")
   
   if (t_stud == 'one-sample') {
-    print('one-sample')
+    print('...dla jednej pr�by.')
     proba <- readline(prompt = 'JakÄ… zmiennÄ… chcesz przetestowaÄ‡?')
     if_num(proba)
     if_norm(proba)
     mo <- readline(prompt = 'Testowana Ĺ›rednia:')
     alt <-readline(prompt = 'Alternatywa:')
     t_test_jedna_niezal(proba, mo, alt)
-  } else if (t_stud =='two-sample independent'){
+  } else if (t_stud =='...dla dw�ch pr�b niezale�nych.'){
     print("two-sample independent")
     proba_1 <-readline(prompt = 'PrĂłba pierwsza:')
     proba_2 <- readline(prompt = 'PrĂłba druga:')
@@ -69,7 +61,7 @@ if (analiza == 'T-student') {
     alt <-readline(prompt = 'Alternatywa: (greater, lesser, none')
     t_test_dwie_niezal(proba_1, proba_2, alt)
   } else {
-    print('two-sample dependent')
+    print('...dla dw�ch pr�b zale�nych.')
     proba_1 <-readline(prompt = 'PrĂłba pierwsza:')
     proba_2 <- readline(prompt = 'PrĂłba druga:')
     
@@ -83,7 +75,7 @@ if (analiza == 'T-student') {
     t_test_dwie_zal(proba_1, proba_2, alt)
   }
 } else if (analiza == 'regresja') {
-  print("wykonuje regresje")
+  print("Przeprowadzam regresje.")
   zalezna <- readline(prompt = "Jaka kolumna z pliku wejĹ›ciowego jest zmiennÄ… zaleĹĽnÄ…?
                               *Zmienna musi byÄ‡ numeryczna")
   
@@ -93,9 +85,8 @@ if (analiza == 'T-student') {
   
   regresja(niezalezne, zalezne)
 } else {
-  print("wykonuje anova")
+  print("Przeprowadzam ANOVE.")
 }
-
 
 #----ZAPISANIE WYNIKÓW----------------------------------------------------------
 
