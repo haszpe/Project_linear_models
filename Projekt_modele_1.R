@@ -45,10 +45,12 @@ if (analiza == 'T-student') {
   t_stud <- readline(prompt = "Jaki test T-studenta chcesz przepowadzić?
                               Masz do wyboru: one-sample, two-sample independent, 
                               two-sample dependent")
+  
   if (t_stud == 'one-sample') {
     print('one-sample')
     proba <- readline(prompt = 'JakÄ… zmiennÄ… chcesz przetestowaÄ‡?')
-    if_norm
+    if_num(proba)
+    if_norm(proba)
     mo <- readline(prompt = 'Testowana Ĺ›rednia:')
     alt <-readline(prompt = 'Alternatywa:')
     t_test_jedna_niezal(proba, mo, alt)
@@ -56,12 +58,27 @@ if (analiza == 'T-student') {
     print("two-sample independent")
     proba_1 <-readline(prompt = 'PrĂłba pierwsza:')
     proba_2 <- readline(prompt = 'PrĂłba druga:')
+    
+    if_num(proba_1)
+    if_norm(proba_1)
+    if_num(proba_2)
+    if_norm(proba_2)
+    
+    homo_var(proba_1, proba_2)
+    
     alt <-readline(prompt = 'Alternatywa: (greater, lesser, none')
     t_test_dwie_niezal(proba_1, proba_2, alt)
   } else {
     print('two-sample dependent')
     proba_1 <-readline(prompt = 'PrĂłba pierwsza:')
     proba_2 <- readline(prompt = 'PrĂłba druga:')
+    
+    if_num(proba_1)
+    if_norm(proba_1)
+    if_num(proba_2)
+    if_norm(proba_2)
+    homo_var(proba_1, proba_2)
+    
     alt <-readline(prompt = 'Alternatywa: (greater, lesser, none')
     t_test_dwie_zal(proba_1, proba_2, alt)
   }

@@ -1,23 +1,3 @@
-#----SPRAWDZENIE DANYCH---------------------------------------------------------
-"Funkcja do sprawdzania danych:
-    - czu dane zostały poprawnie wczytane?
-    - usuwa wiersze z brakującymi danymi?
-    - zwraca komunikat o liczbie wierszy z brakującymi danymi?"
-
-check <- function(data){
-  stopifnot(is.list(data))
-  del_rows = 0
-  
-  for (i in 1:ncol(data)){
-    for (j in nrow(data[,i])){
-      if (is.na(data[j,i]))
-        rm(data[j,i])
-      del_rows = del_rows + 1
-    }}
-  
-  if ( del_rows == 0) message('Great, there is no missing values!') 
-  else message('Number of rows that are deleted due to missing values:', del_rows)
-}
 #----NUMERIC CHECK--------------------------------------------------------------
 
 if_num <- function(proba){
@@ -33,7 +13,7 @@ if_norm <- function(proba){
 
 #----JEDNORODNOŚĆ WARIANCJI---------------------------------------------------
 
-homogen_var <- function(proba_1, proba_2) {
+homo_var <- function(proba_1, proba_2) {
   x <- var.test(proba_1, proba_2)
   stopifnot(x$p.value > 0.05)
 }
