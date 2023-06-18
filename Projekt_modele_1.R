@@ -83,7 +83,8 @@ if (analiza == 'T-student') {
   niezalezne <- unlist(strsplit(niezalezne, ", "))
   
   regresja(niezalezne, zalezne)
-} else {
+} else if (analiza == 'ANOVA') {
   print("Przeprowadzam ANOVE.")
+} else{
+  print('B³¹d. Nie ma takiej analizy.')
 }
-
