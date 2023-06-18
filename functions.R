@@ -80,10 +80,19 @@ t_test_dwie_zal <- function(proba, proba2, alternatywa) {
 
 ANOVA <- function(proba) {
   mean_a <- mean(proba)
+  mean_i <- c()
   for (i in 1:ncol(data)){
-    mean_i <- mean(i)
+    mean_i <- c(mean(i),mean(i))
   }
+  SSA <- sum()
+  SSE <- sum()
   
+  MSA <- SSA/
+  MSE <- SSE/
+  
+  Fish <- MSA/MSE
+  
+  list(statystyka = Fish)
 }
 
 #----REGRESJA-------------------------------------------------------------------
