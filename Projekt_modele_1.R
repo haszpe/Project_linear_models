@@ -19,8 +19,7 @@ data <- readline(prompt = "Podaj Ĺ›cieĹĽkÄ™ do pliku: ")
 # http://theta.edu.pl/wp-content/uploads/2012/02/DanePakietyStatystyczne2.csv
 data <- read.csv2(dta)
 
-#Filtrowanie danych:
-check(data)
+attach(data)
 
 #----WYBOR PRZEPROWADZANEJ ANALIZY----------------------------------------------
 
@@ -39,14 +38,14 @@ if (analiza == 'T-student') {
                               two-sample dependent")
   
   if (t_stud == 'one-sample') {
-    print('...dla jednej pr�by.')
+    print('...dla jednej pr?by.')
     proba <- readline(prompt = 'JakÄ… zmiennÄ… chcesz przetestowaÄ‡?')
     if_num(proba)
     if_norm(proba)
     mo <- readline(prompt = 'Testowana Ĺ›rednia:')
     alt <-readline(prompt = 'Alternatywa:')
     t_test_jedna_niezal(proba, mo, alt)
-  } else if (t_stud =='...dla dw�ch pr�b niezale�nych.'){
+  } else if (t_stud =='...dla dw?ch pr?b niezale?nych.'){
     print("two-sample independent")
     proba_1 <-readline(prompt = 'PrĂłba pierwsza:')
     proba_2 <- readline(prompt = 'PrĂłba druga:')
@@ -61,7 +60,7 @@ if (analiza == 'T-student') {
     alt <-readline(prompt = 'Alternatywa: (greater, lesser, none')
     t_test_dwie_niezal(proba_1, proba_2, alt)
   } else {
-    print('...dla dw�ch pr�b zale�nych.')
+    print('...dla dw?ch pr?b zale?nych.')
     proba_1 <-readline(prompt = 'PrĂłba pierwsza:')
     proba_2 <- readline(prompt = 'PrĂłba druga:')
     
@@ -88,8 +87,3 @@ if (analiza == 'T-student') {
   print("Przeprowadzam ANOVE.")
 }
 
-#----ZAPISANIE WYNIKÓW----------------------------------------------------------
-
-#Czy chcesz zapisac wyniki? 
-  #if ('y') write(wynik) to csv
-  #if ('n') print('end of program')
