@@ -4,26 +4,26 @@ Hanna P?ciak          113752
 Zygmunt ?atyszewicz   121724'
 
 
-#------------------------------------------------------------------------------
-#Wczytanie pliku z danymi ze ścieżki podanej przez użytkownika  -
-#     > zdefiniować w dokumentacji format pliku csv
-
-
-#----WCZYTANIE FUNKCJI---------------------------------------------------------
+#----WCZYTANIE FUNKCJI----------------------------------------------------------
 
 source("~/Documents/GitHub/Project_linear_models/functions.R")
 
-#-----------PROGRAM------------------------------------------------------------
+#----PROGRAM--------------------------------------------------------------------
 
-#Wczytanie danych
-dta <- readline(prompt = "Podaj ścieżkę do pliku: ")
+#Wczytanie danych:
+'Wczytanie pliku z danymi ze ścieżki podanej przez użytkownika  -
+     > zdefiniować w dokumentacji format pliku csv'
+
+data <- readline(prompt = "Podaj ścieżkę do pliku: ")
+# przyk�adowe dane:
 # http://theta.edu.pl/wp-content/uploads/2012/02/DanePakietyStatystyczne2.csv
 data <- read.csv2(dta)
 
-#Filtrowanie danych
+#Filtrowanie danych:
 check(data)
 
-#Wybór analizy
+#----WYBOR PRZEPROWADZANEJ ANALIZY----------------------------------------------
+
 "Definiujemy zmienną funk, która określa jaka funkcja zostanie wykorzystana w
 naszym programie do przeprowadzenia danej analizy"
 
@@ -67,9 +67,9 @@ if (analiza == 'regresja') {
 }
   
 if (analiza == 'ANOVA') {
-  funk <- funkcja_anovy}
+  funk <- ANOVA}
 
-
+#----ZAPISANIE WYNIK�W----------------------------------------------------------
 
 #Czy chcesz zapisac wyniki? 
   #if ('y') write(wynik) to csv

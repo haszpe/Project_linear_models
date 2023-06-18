@@ -102,8 +102,11 @@ t_test_dwie_zal <- function(proba, proba2, alternatywa) {
 
 #--------ANALIZA WARIANCJI-----------------------------------------------------
 
-variance <- function() {
-  
+ANOVA <- function(proba) {
+  mean_a <- mean(proba)
+  for (i in 1:ncol(data)){
+    mean_i <- mean(i)
+  }
   
 }
 
