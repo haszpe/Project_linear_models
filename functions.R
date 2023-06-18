@@ -4,7 +4,7 @@ if_num <- function(proba){
   stopifnot(is.numeric(proba))
 }
 
-#----NORMALNOSC ROZKŁADU-------------------------------------------------------
+#----NORMALNOSC ROZKLADU--------------------------------------------------------
 
 if_norm <- function(proba){
   x = shapiro.test(proba)

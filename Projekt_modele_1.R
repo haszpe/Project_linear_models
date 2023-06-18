@@ -12,7 +12,7 @@ source("~/Documents/GitHub/Project_linear_models/functions.R")
 
 #Wczytanie danych:
 'Wczytanie pliku z danymi ze sciezki podanej przez uzytkownika  -
-     > zdefiniowac�„â€ˇ w dokumentacji format pliku csv'
+     > zdefiniowac w dokumentacji format pliku csv'
 
 library(tidyverse)
 data <- read_delim(delim = ";", 
@@ -41,7 +41,7 @@ if (analiza == 'T-student') {
     proba <- readline(prompt = 'Jaka zmienna chcesz przetestowac?')
     if_num(proba)
     if_norm(proba)
-    mo <- readline(prompt = 'Testowana Äąâ€şrednia:')
+    mo <- readline(prompt = 'Testowana srednia:')
     alt <-readline(prompt = 'Alternatywa:')
     t_test_jedna_niezal(proba, mo, alt)
   } else if (t_stud =='...dla dwoch prob niezaleznych.'){
