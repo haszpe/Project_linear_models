@@ -1,44 +1,21 @@
 library(tidyverse)
-library(broom) # tidy
-library(purrr) # map
 
 
 # przygotowanie danych ----------------------------------------------------
 
-dane <- read_delim(delim = ";", file = "../dane/DanePakietyStatystyczne2.csv")
+dane <- read_delim(delim = ";", 
+  file = "http://theta.edu.pl/wp-content/uploads/2012/02/DanePakietyStatystyczne2.csv")
 
-glimpse(dane)
-
-
-
-dane <- dane %>% select(-YOB, -Sex, -VitB12_log, -Creatinine_log)  %>%
-  rename(Obesity = Nadwaga, Age = Wiek, Sex = Sex2) %>%
-  relocate(Age, Sex, City, .before = Height) %>%
-  mutate(City = str_replace_all(City,
-                  c("Wroc\xb3aw" = "Wroclaw", "Gda\xf1sk" = "Gdansk")))
-  
 
 # recznie regresja --------------------------------------------------------
 
-# NIE MOGE UZYC LM
-
-
-# input, tutaj podaje nazwy zmiennych niezaleznych ktore beda w modelu
-zmienne_niezalezne <- c("Age")
+# input for function 
+zmienne_niezalezne <- c("Wiek", "Weight", "Height")
 zmienna_zalezna <- c("BMI")
-
-zmienne_niezalezne <- readline(prompt = 
-      "Podaj zmienne niezależne oddzielone przecinkiem bez cydzyslowow: ")
-zmienne_niezalezne <- unlist(strsplit(zmienne_niezalezne, ", "))
-zmienne_niezalezne
-
-zmienna_zalezna <- readline(prompt = "Podaj zmienna zalezna: ")
-
 
 
 regresja <- function(ind_variables, dep_variables)
 {
-  # NIE MOGE UZYC LM
   X <- select(dane, all_of(ind_variables))
   y <- select(dane, all_of(dep_variables))
   
@@ -47,59 +24,55 @@ regresja <- function(ind_variables, dep_variables)
   X <- ones %>% bind_cols(X)
   X <- as.matrix(X)
   y <- as.matrix(y)
-  # i tak nie zmienia wyniku wspolczynnikow
   
-  wspolczynnik <- solve( t(X) %*% X ) %*% t(X) %*% y
+  # independent variables estimate
+  wspolczynnik <- solve(t(X) %*% X) %*% t(X) %*% y
   
   predicted <- tibble(predicted = rep(1, nrow(X)))
-  for (i in 1:(length(ind_variables)+1))
+  for (i in 1:(length(ind_variables) + 1))
   {
     predicted <- predicted %>% 
-      mutate(predicted = predicted + wspolczynnik[i] * X[,i])
+      mutate(predicted = predicted + wspolczynnik[i] * X[, i])
   }
   
-  # potem moze byc problem
   predicted <- predicted %>% 
-    mutate(predicted = predicted -1)
+    mutate(predicted = predicted - 1)
   
   comparasion <- predicted %>% bind_cols(tibble(real = y))  %>%
     mutate(residual = predicted - real)
   
   stopnie_swobody <- nrow(X) - length(ind_variables) - 1
   
-  res <- comparasion$residual[,1]
+  res <- comparasion$residual[, 1]
   
-  S2e = t(res)%*%res / (nrow(y) - ncol(X))
-  Se = sqrt(S2e)
+  S2e <- t(res) %*% res / (nrow(y) - ncol(X))
+  Se <- sqrt(S2e)
   
-  seBeta = sqrt(diag(c(S2e) * solve(t(X)%*%X)))
-  t = wspolczynnik / seBeta
+  seBeta <- sqrt(diag(c(S2e) * solve(t(X) %*% X)))
+  t <- wspolczynnik / seBeta
   
-  p.value.t = 2*pt(abs(t), nrow(y) - ncol(X), lower.tail = F)
+  # independent variables p.values
+  p.value.t <- 2 * pt(abs(t), nrow(y) - ncol(X), lower.tail = FALSE)
+  ind_variables <- append(ind_variables, "Intercept", after = 0)
   
-  ind_variables <- append(ind_variables,"interpret", after = 0)
   
-  result_table <- tibble(variable = ind_variables,
-                         estimate = wspolczynnik,
-                         p_value = p.value.t)
+  Coefficients <- tibble(Coefficients = ind_variables,
+                         estimate = wspolczynnik[,1],
+                         "Pr(>|t|)" = p.value.t[,1])
   
-  # R2, p.value dla modelu, statystyka F
+  # model statistics 
   
-  R2 = 1- t(res)%*%res / sum((y-mean(y))^2)
-  # adjusted R2
+  R2 <- 1 - t(res) %*% res / sum((y - mean(y))^2)
+  adjusted_R2 <- 1 - (1 - R2) * (nrow(y) - 1) / (nrow(y) - ncol(X) - 1)
+  F_statistic <-  R2 / (1-R2) * (nrow(y) - ncol(X)) / (ncol(X) - 1)
+  p.value.model <- 1 - pf(F_statistic, length(ind_variables), nrow(y) - ncol(X),
+                          lower.tail = TRUE)
   
-  f = R2 / (1-R2) * (nrow(y) - ncol(X)) / (ncol(X) - 1)
-  
-  p.value.model = pf(F, ncol(X) - 1, nrow(y) - ncol(X), lower.tail = FALSE)
-  
-  print(p.value.model)
-  # wyzsza tym lepiej?
-  
-  statistics_table <- tibble(statistic = c("adj.R2","p.value.model","F"),
-                             value = c(R2, p.value.model, f))
+  statistics_table <- tibble(statistic = c("adj.R2", "p.value.model", "F-statistic"),
+                             value = c(adjusted_R2, p.value.model, F_statistic))
   
   print(statistics_table)
-  print(result_table)
+  print(Coefficients)
   
 }
 
@@ -112,27 +85,9 @@ regresja(zmienne_niezalezne, zmienna_zalezna)
 
 # wzor --------------------------------------------------------
 
+# regresja z wieloma zmiennymi niezaleznymi
 
-# regresja prosta
-
-ggplot(data = dane, aes(x = Age, y = BMI)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
-
-
-model_bmi_age <- lm(formula = BMI~Age, data = dane)
-tidy(model_bmi_age) %>% select(-std.error, -statistic) %>% 
-  rename(coefficient = estimate, ind_variable = term)
-
-# age = BMI * -0.306 + 85.1
-# ze wzrostem Age o 1 BMI maleje o 0.0582
-
-
-# regresja zlozona
 model_bmi <- lm(formula = BMI~Age+Weight+Height, data = dane)
-summary(model_bmi)
-tidy(model_bmi)
-glimpse(model_bmi)
-augment(model_bmi)
-predict <- tibble(fitted(model_bmi))
+summary(model_bmi) # F statyistic, adj.R oraz p.value modelu, 2 tabelka
+tidy(model_bmi) # coefficients, p.value zmiennych = moja 1 tabelka
 
