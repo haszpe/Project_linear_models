@@ -56,7 +56,7 @@ if (analiza == 'ANOVA') {
 #Wybór zmiennych
 niezal <- readline(prompt = "Jaka kolumna z pliku wejściowego jest zmienną niezależną?")
 
-zal <- readline(prompt == "Jakie kolumny są zmienną/ymi zależną/ymi?
+zal <- readline(prompt = "Jakie kolumny są zmienną/ymi zależną/ymi?
                           Wpisz nazwy kolumn bez cudzysłowiów i po przecinkach")
 zal <- unlist(strsplit(zal, ", "))
 
