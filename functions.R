@@ -18,22 +18,25 @@ check <- function(data){
   if ( del_rows == 0) message('Great, there is no missing values!') 
   else message('Number of rows that are deleted due to missing values:', del_rows)
 }
+#--------WARTOŚCI NUMERYCZNE---------------------------------------------------
+
+if_num <- function(proba){
+  stopifnot(is.numeric(proba))
+}
 
 #--------NORMALNOŚĆ ROZKŁADU---------------------------------------------------
 
-if_norm <- function() {
-  
+if_norm <- function(proba){
+  x = shapiro.test(proba)
+  stopifnot(x[2] < 0.05)
 }
-
-
 
 #--------JEDNORODNOŚĆ WARIANCJI------------------------------------------------
 
-homogen_var <- function() {
-  
+homogen_var <- function(proba_1, proba_2) {
+  x <- var.test(proba_1, proba_2)
+  stopifnot(x$p.value > 0.05)
 }
-
-
 
 #--------TESTY T-STUDENTA------------------------------------------------------
     "- jednej próby
