@@ -1,8 +1,8 @@
-#--------SPRAWDZENIE DANYCH----------------------------------------------------
-"Funkcja do sprawdzania danych
-    - czu dane zostały poprawnie wczytane 
-    - usuwa wiersze z brakującymi danymi
-    - zwraca komunikat o liczbie wierszy z brakującymi danymi"
+#----SPRAWDZENIE DANYCH---------------------------------------------------------
+"Funkcja do sprawdzania danych:
+    - czu dane zostały poprawnie wczytane?
+    - usuwa wiersze z brakującymi danymi?
+    - zwraca komunikat o liczbie wierszy z brakującymi danymi?"
 
 check <- function(data){
   stopifnot(is.list(data))
@@ -18,30 +18,27 @@ check <- function(data){
   if ( del_rows == 0) message('Great, there is no missing values!') 
   else message('Number of rows that are deleted due to missing values:', del_rows)
 }
-#--------WARTOŚCI NUMERYCZNE---------------------------------------------------
+#----NUMERIC CHECK--------------------------------------------------------------
 
 if_num <- function(proba){
   stopifnot(is.numeric(proba))
 }
 
-#--------NORMALNOŚĆ ROZKŁADU---------------------------------------------------
+#----NORMALNOŚĆ ROZKŁADU-----------------------------------------------------
 
 if_norm <- function(proba){
   x = shapiro.test(proba)
   stopifnot(x[2] < 0.05)
 }
 
-#--------JEDNORODNOŚĆ WARIANCJI------------------------------------------------
+#----JEDNORODNOŚĆ WARIANCJI---------------------------------------------------
 
 homogen_var <- function(proba_1, proba_2) {
   x <- var.test(proba_1, proba_2)
   stopifnot(x$p.value > 0.05)
 }
 
-#--------TESTY T-STUDENTA------------------------------------------------------
-    "- jednej próby
-    - dwóch prób niezależnych
-    - dwóch prób zależnych"
+#----TESTY T-STUDENTA-----------------------------------------------------------
 
 t_test_jedna_niezal <- function(proba, mu0, alternatywa) {
   mean_x = mean(proba)
@@ -81,7 +78,6 @@ t_test_dwie_niezal <- function(proba, proba2, alternatywa) {
   list(statystyka = stat_t, p = p_wartosc)
 }
 
-
 t_test_dwie_zal <- function(proba, proba2, alternatywa) {
   d = proba - proba2
   mean_d = mean(d)
@@ -100,7 +96,7 @@ t_test_dwie_zal <- function(proba, proba2, alternatywa) {
   list(statystyka = stat_t, p = p_wartosc)
 }
 
-#--------ANALIZA WARIANCJI-----------------------------------------------------
+#----ANALIZA WARIANCJI----------------------------------------------------------
 
 ANOVA <- function(proba) {
   mean_a <- mean(proba)
@@ -110,8 +106,7 @@ ANOVA <- function(proba) {
   
 }
 
-#--------REGRESJA-----------------------------------------------------
-
+#----REGRESJA-------------------------------------------------------------------
 
 regresja <- function(ind_variables, dep_variables)
 {
@@ -219,3 +214,4 @@ regresja <- function(ind_variables, dep_variables)
   print(Coefficients)
   
 }
+#-------------------------------------------------------------------------------
