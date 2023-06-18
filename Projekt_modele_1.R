@@ -36,13 +36,22 @@ if (analiza == 'T-student') {
                               two-sample dependent")
   
   if (t_stud == 'one-sample') {
-    funk <- t_test_jedna_niezal
+    proba <- readline(prompt = 'Jaką zmienną chcesz przetestować?')
+    mo <- readline(prompt = 'Testowana średnia:')
+    alt <-readline(prompt = 'Alternatywa:')
+    t_test_jedna_niezal(proba, mo, alt)
   } 
   if (t_stud =='two-sample independent'){
-    funk <- t_test_dwie_niezal
+    proba_1 <-readline(prompt = 'Próba pierwsza:')
+    proba_2 <- readline(prompt = 'Próba druga:')
+    alt <-readline(prompt = 'Alternatywa: (greater, lesser, none')
+    t_test_dwie_niezal(proba_1, proba_2, alt)
   }
   if (t_stud == 'two-sample dependent'){
-    funk <- t_test_dwie_zal
+    proba_1 <-readline(prompt = 'Próba pierwsza:')
+    proba_2 <- readline(prompt = 'Próba druga:')
+    alt <-readline(prompt = 'Alternatywa: (greater, lesser, none')
+    t_test_dwie_zal(proba_1, proba_2, alt)
   }}
   
 if (analiza == 'regresja') {
@@ -54,12 +63,14 @@ if (analiza == 'ANOVA') {
 
 
 #Wybór zmiennych
-zalezna <- readline(prompt = "Jaka kolumna z pliku wejściowego jest zmienną niezależną?")
+wybor <- function(){
+zalezna <- readline(prompt = "Jaka kolumna z pliku wejściowego jest zmienną zależną?
+                              *Zmienna musi być numeryczna")
 
 niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?
                           Wpisz nazwy kolumn bez cudzysłowiów i po przecinkach")
 niezalezne <- unlist(strsplit(niezalezne, ", "))
-
+}
 
 #Działania
 "Weź zmienną funk (określa jaka będzie funkcja do użycia i zmienne: zal i niezal"

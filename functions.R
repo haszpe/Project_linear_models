@@ -45,15 +45,17 @@ t_test_jedna_niezal <- function(proba, mu0, alternatywa) {
   sd_x = sd(proba)
   n_x = length(proba)
   df_x = n_x - 1
-  t = sqrt(n_x)*(mean_x-mu0)/sd_x
-  if (alternatywa == 0) {
-    p_wartosc = pt(t, df_x)
-  } else if (alternatywa == 1) {
-    p_wartosc = pt(t, df_x, lower.tail = FALSE)        
+  
+  stat_t = sqrt(n_x)*(mean_x-mu0)/sd_x
+
+  if (alternatywa == 'greater') {
+    p_wartosc = pt(stat_t, df_x, lower.tail = FALSE) 
+  } else if (alternatywa == 'lesser') {
+    p_wartosc = 2*pt(abs(stat_t), df_x, lower.tail = FALSE)     
   } else {
-    p_wartosc = 2*pt(abs(t), df_x, lower.tail = FALSE) 
+    p_wartosc = pt(stat_t, df_x) 
   }
-  list(statystyka = t, p = p_wartosc)
+  list(statystyka = stat_t, p = p_wartosc)
 }
 
 t_test_dwie_niezal <- function(proba, proba2, alternatywa) {    
@@ -64,16 +66,18 @@ t_test_dwie_niezal <- function(proba, proba2, alternatywa) {
   var_y = var(proba2)
   n_y = length(proba2)
   df = n_x + n_y - 2
-  t = (mean_x-mean_y)/sqrt((n_x-1)*var_x+(n_y-1)*var_y)*sqrt((n_x*n_y*df) / (n_x+n_y))
-  if (alternatywa == 0) {
-    p_wartosc = pt(t, df)
-  } else if (alternatywa == 1) {
-    p_wartosc = pt(t, df, lower.tail = FALSE)        
+  stat_t = (mean_x-mean_y)/sqrt((n_x-1)*var_x+(n_y-1)*var_y)*sqrt((n_x*n_y*df) / (n_x+n_y))
+  
+  if (alternatywa == 'greater') {
+    p_wartosc = pt(stat_t, df, lower.tail = FALSE)
+  } else if (alternatywa == 'lesser') {
+    p_wartosc = 2*pt(abs(stat_t), df, lower.tail = FALSE)         
   } else {
-    p_wartosc = 2*pt(abs(t), df, lower.tail = FALSE) 
+    p_wartosc = pt(stat_t, df)
   }
-  list(statystyka = t, p = p_wartosc)
+  list(statystyka = stat_t, p = p_wartosc)
 }
+
 
 t_test_dwie_zal <- function(proba, proba2, alternatywa) {
   d = proba - proba2
@@ -81,15 +85,37 @@ t_test_dwie_zal <- function(proba, proba2, alternatywa) {
   sd_d = sd(d)
   n_d = length(d)
   df_d = n_d - 1
-  t = sqrt(n_d)*mean_d/sd_d
-  if (alternatywa == 0) {
-    p_wartosc = pt(t, df_d)
-  } else if (alternatywa == 1) {
-    p_wartosc = pt(t, df_d, lower.tail = FALSE)        
+  stat_t = sqrt(n_d)*mean_d/sd_d
+  
+  if (alternatywa == 'greater') {
+    p_wartosc = pt(stat_t, df_d, lower.tail = FALSE)
+  } else if (alternatywa == 'lesser') {
+    p_wartosc = 2*pt(abs(stat_t), df_d, lower.tail = FALSE)         
   } else {
-    p_wartosc = 2*pt(abs(t), df_d, lower.tail = FALSE) 
+    p_wartosc = pt(stat_t, df_d)
   }
-  list(statystyka = t, p = p_wartosc)
+  list(statystyka = stat_t, p = p_wartosc)
+}
+
+
+#--------KORELACJA-------------------------------------------------------------
+    "- liniowa pearsona
+    - rang spearmana"
+
+correlation_spearman <- function(y, dane, ...) {
+  zmienne <- (...)
+  for (i in 1:length(zmienne_zal)){
+    stopifnot(is.numeric(zmienne_zal[i]))
+  }
+  
+  
+}
+correlation_spearman <- function(y, dane, ...) {
+  zmienne <- (...)
+  for (i in 1:length(zmienne_zal)){
+    stopifnot(is.numeric(zmienne_zal[i]))
+  }
+  
 }
 
 
@@ -117,7 +143,7 @@ regresja <- function(ind_variables, dep_variables)
   y <- select(dane, all_of(dep_variables))
   
   ones <- tibble(ones = rep(1, nrow(X)))
-
+  
   X <- ones %>% bind_cols(X)
   # Przekształcamy ramki danych X i y na macierze, aby umożliwić obliczenia macierzowe.
   X <- as.matrix(X)
@@ -209,7 +235,3 @@ regresja <- function(ind_variables, dep_variables)
   print(Coefficients)
   
 }
-
-
-
-
