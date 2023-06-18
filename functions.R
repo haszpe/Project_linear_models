@@ -97,28 +97,6 @@ t_test_dwie_zal <- function(proba, proba2, alternatywa) {
   list(statystyka = stat_t, p = p_wartosc)
 }
 
-
-#--------KORELACJA-------------------------------------------------------------
-    "- liniowa pearsona
-    - rang spearmana"
-
-correlation_spearman <- function(y, dane, ...) {
-  zmienne <- (...)
-  for (i in 1:length(zmienne_zal)){
-    stopifnot(is.numeric(zmienne_zal[i]))
-  }
-  
-  
-}
-correlation_spearman <- function(y, dane, ...) {
-  zmienne <- (...)
-  for (i in 1:length(zmienne_zal)){
-    stopifnot(is.numeric(zmienne_zal[i]))
-  }
-  
-}
-
-
 #--------ANALIZA WARIANCJI-----------------------------------------------------
 
 variance <- function() {
