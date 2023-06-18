@@ -4,14 +4,14 @@ if_num <- function(proba){
   stopifnot(is.numeric(proba))
 }
 
-#----NORMALNOŚĆ ROZKŁADU-----------------------------------------------------
+#----NORMALNOSC ROZKŁADU-------------------------------------------------------
 
 if_norm <- function(proba){
   x = shapiro.test(proba)
   stopifnot(x[2] < 0.05)
 }
 
-#----JEDNORODNOŚĆ WARIANCJI---------------------------------------------------
+#----JEDNORODNOSC WARIANCJI-----------------------------------------------------
 
 homo_var <- function(proba_1, proba_2) {
   x <- var.test(proba_1, proba_2)
@@ -78,127 +78,111 @@ t_test_dwie_zal <- function(proba, proba2, alternatywa) {
 
 #----ANALIZA WARIANCJI----------------------------------------------------------
 
-ANOVA <- function(proba) {
-  mean_a <- mean(proba)
-  mean_i <- c()
-  for (i in 1:ncol(data)){
-    mean_i <- c(mean(i),mean(i))
-  }
-  SSA <- sum()
-  SSE <- sum()
-  
-  MSA <- SSA/
-  MSE <- SSE/
-  
-  Fish <- MSA/MSE
-  
-  list(statystyka = Fish)
-}
+'WORK IN PROGRESS'
 
 #----REGRESJA-------------------------------------------------------------------
 
 regresja <- function(ind_variables, dep_variables)
 {
   # Funkcja regresja przyjmuje argumenty ind_variables i dep_variables, 
-  # które reprezentują nazwy zmiennych niezależnych i zależnych,
-  # w postaci wektorow lancuchow znakow
+  # ktore reprezentuja nazwy zmiennych niezaleznych i zaleznych,
+  # w postaci wektorow lancuchow znakow.
   
-  # Wybieramy z danych tylko te kolumny, które odpowiadają 
-  # zmiennym niezależnym i przypisujemy je do zmiennej X.
+  # Wybieramy z danych tylko te kolumny, ktore odpowiadaja 
+  # zmiennym niezaleznym i przypisujemy je do zmiennej X.
   X <- select(dane, all_of(ind_variables))
-  # Wybieramy z danych tylko tę kolumnę, 
-  # która odpowiada zmiennej zależnej i przypisujemy ją do zmiennej y.
+  # Wybieramy z danych tylko ta kolumne, 
+  # ktora odpowiada zmiennej zaleznej i przypisujemy ja do zmiennej y.
   y <- select(dane, all_of(dep_variables))
   
   ones <- tibble(ones = rep(1, nrow(X)))
   
   X <- ones %>% bind_cols(X)
-  # Przekształcamy ramki danych X i y na macierze, aby umożliwić obliczenia macierzowe.
+  # Przeksztalcamy ramki danych X i y na macierze, aby umozliwic obliczenia macierzowe.
   X <- as.matrix(X)
   y <- as.matrix(y)
   
-  # Obliczamy estymatory współczynników regresji
+  # Obliczamy estymatory wspoczynnikow regresji.
   wspolczynnik <- solve(t(X) %*% X) %*% t(X) %*% y
   
   
-  # Tworzymy ramkę danych "predicted" zawierającą kolumnę z samymi jedynkami.
+  # Tworzymy ramke danych "predicted" zawierajaca kolumne z samymi jedynkami.
   # Liczba wierszy tej ramki danych odpowiada liczbie obserwacji w X.
-  # ji. Początkowe przewidywane wartości są ustawione na 1, ponieważ 
-  # biorą pod uwagę wpływ wyrazu wolnego w modelu regresji
+  # ji. Poczatkowe przewidywane wartosci sa ustawione na 1, poniewaz 
+  # biora pod uwage wplyw wyrazu wolnego w modelu regresji.
   predicted <- tibble(predicted = rep(1, nrow(X)))
   
-  # Dla każdej zmiennej niezależnej (oraz dla wyrazu wolnego) obliczamy wartości
-  # przewidywane, sumując odpowiednie współczynniki z pomnożonymi przez wartości zmiennych niezależnych.
+  # Dla kazdej zmiennej niezaleznej (oraz dla wyrazu wolnego) obliczamy wartosci
+  # przewidywane, sumujac odpowiednie wspolczynniki z pomnozonymi przez wartosci zmiennych niezaleznych.
   for (i in 1:(length(ind_variables) + 1))
   {
     predicted <- predicted %>% 
       mutate(predicted = predicted + wspolczynnik[i] * X[, i])
   }
   
-  
-  # Dostosowujemy wartości przewidywane przez odjęcie 1, ponieważ wcześniej dodaliśmy kolumnę jedynkową do X.
+  # Dostosowujemy wartosci przewidywane przez odjecie 1, poniewaz wczesniej dodalismy kolumne jedynkowa do X.
   predicted <- predicted %>% 
     mutate(predicted = predicted - 1)
   
   
-  # Łączymy ramki danych "predicted" i "y" kolumnowo, tworząc ramkę danych "comparison" 
-  # zawierającą wartości przewidywane i wartości rzeczywiste. Następnie obliczamy reszty modelu 
-  # jako różnicę między wartościami przewidywanymi a wartościami rzeczywistymi.
+  # Laczymy ramki danych "predicted" i "y" kolumnowo, tworzac ramke danych "comparison" 
+  # zawierajaca wartosci przewidywane i wartosci rzeczywiste. Nastepnie obliczamy reszty modelu 
+  # jako roznice miedzy wartosciami przewidywanymi a wartosciami rzeczywistymi.
   comparasion <- predicted %>% bind_cols(tibble(real = y))  %>%
     mutate(residual = predicted - real)
   
-  # Obliczamy stopnie swobody jako różnicę między liczbą obserwacji a liczbą zmiennych niezależnych i wyrazem wolnym
+  # Obliczamy stopnie swobody jako roznice miedzy liczba obserwacji a liczba zmiennych niezaleznych i wyrazem wolnym.
   stopnie_swobody <- nrow(X) - length(ind_variables) - 1
   
-  #   # Przypisujemy kolumnę "residual" z ramki danych "comparison" do zmiennej
-  # "res", która zawiera reszty modelu.
+  #  Przypisujemy kolumne "residual" z ramki danych "comparison" do zmiennej
+  # "res", ktora zawiera reszty modelu.
   res <- comparasion$residual[, 1]
   
   
-  # Obliczamy błąd standardowy jako pierwiastek z sumy kwadratów reszt podzielonych przez 
-  # (liczbę obserwacji - liczba zmiennych niezależnych).
+  # Obliczamy blad standardowy jako pierwiastek z sumy kwadratow reszt podzielonych przez 
+  # (liczbe obserwacji - liczba zmiennych niezaleznych).
   S2e <- t(res) %*% res / (nrow(y) - ncol(X))
   Se <- sqrt(S2e)
   
-  # Obliczamy błędy standardowe współczynników regresji i wartości t
+  # Obliczamy bledy standardowe wspolczynnikow regresji i wartosci t.
   seBeta <- sqrt(diag(c(S2e) * solve(t(X) %*% X)))
   t <- wspolczynnik / seBeta
   
   
-  # Obliczamy wartości p, które są dwukrotne większe od wartości t.
+  # Obliczamy wartosci p, ktore sa dwukrotne wieksze od wartosci t.
   p.value.t <- 2 * pt(abs(t), nrow(y) - ncol(X), lower.tail = FALSE)
   ind_variables <- append(ind_variables, "Intercept", after = 0)
   
-  # Tworzymy ramkę danych "Coefficients" zawierającą nazwy zmiennych, estymaty współczynników i wartości p.
+  # Tworzymy ramke danych "Coefficients" zawierajaca nazwy zmiennych, estymaty wspolczynnikow i wartosci p.
   Coefficients <- tibble(Coefficients = ind_variables,
                          estimate = wspolczynnik[,1],
                          "Pr(>|t|)" = p.value.t[,1])
   
-  # Obliczamy statystyki modelu: R-kwadrat, skorygowany R-kwadrat, statystykę F i wartość p dla modelu.
+  # Obliczamy statystyki modelu: R-kwadrat, skorygowany R-kwadrat, statystyke F i wartosc p dla modelu.
   
   R2 <- 1 - t(res) %*% res / sum((y - mean(y))^2)
-  # Obliczamy współczynnik determinacji (R-kwadrat) modelu. Jest to miara, która informuje o tym, 
-  # jak dobrze model wyjaśnia zmienność w danych. Wykorzystujemy sumę kwadratów reszt i sumę 
-  # kwadratów różnic między wartościami zależnymi a ich średnią.
+  # Obliczamy wspolczynnik determinacji (R-kwadrat) modelu. Jest to miara, ktora informuje o tym, 
+  # jak dobrze model wyjasnia zmiennosc w danych. Wykorzystujemy sume kwadratow reszt i sume 
+  # kwadratow roznic miedzy wartosciami zaleznymi a ich srednia.
   
   adjusted_R2 <- 1 - (1 - R2) * (nrow(y) - 1) / (nrow(y) - ncol(X) - 1)
-  # Obliczamy skorygowany współczynnik determinacji (skorygowany R-kwadrat), który uwzględnia
-  # liczbę zmiennych niezależnych i liczbę obserwacji w modelu.
+  # Obliczamy skorygowany wspolczynnik determinacji (skorygowany R-kwadrat), ktory uwzglednia
+  # liczbe zmiennych niezaleznych i liczbe obserwacji w modelu.
   
   F_statistic <-  R2 / (1-R2) * (nrow(y) - ncol(X)) / (ncol(X) - 1)
-  # Obliczamy statystykę F, która jest stosowana do testowania istotności modelu regresji. 
+  # Obliczamy statystyke F, ktora jest stosowana do testowania istotnosci modelu regresji. 
   
   p.value.model <- 1 - pf(F_statistic, length(ind_variables), nrow(y) - ncol(X),
                           lower.tail = TRUE)
-  # Obliczamy wartość p dla testu statystycznego modelu, który informuje o istotności
-  # statystycznej modelu. Wartość p jest prawdopodobieństwem uzyskania statystyki F większej
-  # lub równej obliczonej statystyce F
+  # Obliczamy wartosc p dla testu statystycznego modelu, ktory informuje o istotnosci
+  # statystycznej modelu. Warto�sc p jest prawdopodobienstwem uzyskania statystyki F wiekszej
+  # lub rownej obliczonej statystyce F.
   
-  # Tworzymy ramkę danych "statistics_table" zawierającą statystyki modelu.
+  # Tworzymy ramke danych "statistics_table" zawierajaca statystyki modelu.
   statistics_table <- tibble(statistic = c("adj.R2", "p.value.model", "F-statistic"),
                              value = c(adjusted_R2, p.value.model, F_statistic))
   
-  # Wyświetlamy tabelę ze statystykami modelu oraz tabelę z estymatami współczynników.
+  # Wyswietlamy tabele ze statystykami modelu oraz tabele z estymatami wspolczynnikow.
   print(statistics_table)
   print(Coefficients)
   

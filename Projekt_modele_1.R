@@ -1,7 +1,7 @@
 'AUTORZY:
 Krzysztof Jakubowski  121992
-Hanna P?ciak          113752 
-Zygmunt ?atyszewicz   121724'
+Hanna Peciak          113752 
+Zygmunt Latyszewicz   121724'
 
 
 #----WCZYTANIE FUNKCJI----------------------------------------------------------
@@ -11,8 +11,8 @@ source("~/Documents/GitHub/Project_linear_models/functions.R")
 #----PROGRAM--------------------------------------------------------------------
 
 #Wczytanie danych:
-'Wczytanie pliku z danymi ze Äąâ€şcieÄąÄ˝ki podanej przez uÄąÄ˝ytkownika  -
-     > zdefiniowaĂ„â€ˇ w dokumentacji format pliku csv'
+'Wczytanie pliku z danymi ze sciezki podanej przez uzytkownika  -
+     > zdefiniowac�„â€ˇ w dokumentacji format pliku csv'
 
 library(tidyverse)
 data <- read_delim(delim = ";", 
@@ -22,32 +22,32 @@ attach(data)
 
 #----WYBOR PRZEPROWADZANEJ ANALIZY----------------------------------------------
 
-"Definiujemy zmiennĂ„â€¦ funk, ktÄ‚Ĺ‚ra okreÄąâ€şla jaka funkcja zostanie wykorzystana w
+"Definiujemy zmienna funk, ktora okresla jaka funkcja zostanie wykorzystana w
 naszym programie do przeprowadzenia danej analizy"
 
-analiza <- readline(prompt = "JakÄ… analizÄ™ chcesz przeprowadziÄ‡? \n
+analiza <- readline(prompt = "Jaka analize chcesz przeprowadzic? \n
                           Do wyboru masz: T-student, regresja, ANOVA")
 
   
 if (analiza == 'T-student') {
   print("Przeprowadzam test T-studenta...")
   
-  t_stud <- readline(prompt = "Jaki test T-studenta chcesz przepowadziÄ‡? \n
+  t_stud <- readline(prompt = "Jaki test T-studenta chcesz przepowadzic? \n
                               Masz do wyboru: one-sample, two-sample independent, 
                               two-sample dependent")
   
   if (t_stud == 'one-sample') {
-    print('...dla jednej pr?by.')
-    proba <- readline(prompt = 'JakĂ„â€¦ zmiennĂ„â€¦ chcesz przetestowaĂ„â€ˇ?')
+    print('...dla jednej proby.')
+    proba <- readline(prompt = 'Jaka zmienna chcesz przetestowac?')
     if_num(proba)
     if_norm(proba)
     mo <- readline(prompt = 'Testowana Äąâ€şrednia:')
     alt <-readline(prompt = 'Alternatywa:')
     t_test_jedna_niezal(proba, mo, alt)
-  } else if (t_stud =='...dla dw?ch pr?b niezale?nych.'){
+  } else if (t_stud =='...dla dwoch prob niezaleznych.'){
     print("two-sample independent")
-    proba_1 <-readline(prompt = 'PrÄ‚Ĺ‚ba pierwsza:')
-    proba_2 <- readline(prompt = 'PrÄ‚Ĺ‚ba druga:')
+    proba_1 <-readline(prompt = 'Proba pierwsza:')
+    proba_2 <- readline(prompt = 'Proba druga:')
     
     if_num(proba_1)
     if_norm(proba_1)
@@ -59,9 +59,9 @@ if (analiza == 'T-student') {
     alt <-readline(prompt = 'Alternatywa: (greater, lesser, none')
     t_test_dwie_niezal(proba_1, proba_2, alt)
   } else {
-    print('...dla dw?ch pr?b zale?nych.')
-    proba_1 <-readline(prompt = 'PrÄ‚Ĺ‚ba pierwsza:')
-    proba_2 <- readline(prompt = 'PrÄ‚Ĺ‚ba druga:')
+    print('...dla dwoch prob zaleznych.')
+    proba_1 <-readline(prompt = 'Proba pierwsza:')
+    proba_2 <- readline(prompt = 'Proba druga:')
     
     if_num(proba_1)
     if_norm(proba_1)
@@ -74,16 +74,16 @@ if (analiza == 'T-student') {
   }
 } else if (analiza == 'regresja') {
   print("Przeprowadzam regresje.")
-  zalezna <- readline(prompt = "Jaka kolumna z pliku wejÄąâ€şciowego jest zmiennĂ„â€¦ zaleÄąÄ˝nĂ„â€¦?
-                              *Zmienna musi byĂ„â€ˇ numeryczna")
+  zalezna <- readline(prompt = "Jaka kolumna z pliku wejsciowego jest zmienna zalezna?
+                              *Zmienna musi byc numeryczna")
   
   niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?
-                          Wpisz nazwy kolumn bez cudzysÄąâ€šowiÄ‚Ĺ‚w i po przecinkach")
+                          Wpisz nazwy kolumn bez cudzyslwowu i po przecinkach")
   niezalezne <- unlist(strsplit(niezalezne, ", "))
   
   regresja(niezalezne, zalezne)
 } else if (analiza == 'ANOVA') {
   print("Przeprowadzam ANOVE.")
 } else{
-  print('Błąd. Nie ma takiej analizy.')
+  print('Blad. Nie ma takiej analizy.')
 }
