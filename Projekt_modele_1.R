@@ -108,13 +108,3 @@ while (TRUE) {
     analiza <-  as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic? "))
   }
 }
-
-#----ZAPISANIE WYNIKOW----------------------------------------------------------
-#to jest opcjonalnie
-
-zapis <- readline(prompt = "Czy chcesz zapisaæ wyniki?(t/n)")
-if(zapis == t){
-  #jak sie zapisuje plik? XD
-} else if(zapis == n){
-  print("Koniec.")
-}

@@ -106,7 +106,41 @@ t_test_dwie_zal <- function(proba, proba2, alternatywa) {
 
 #----ANALIZA WARIANCJI----------------------------------------------------------
 
-'WORK IN PROGRESS'
+ANOVA <- function(proba, alfa) {
+  k = sort(unique(alfa))
+  
+  n_i = numeric()
+  mean_i = numeric()
+  for (i in k) {
+    n_i[i] = length(alfa[alfa == i])
+    # srednie i-tej grup:
+    mean_i[i] = mean(proba[alfa == i])
+  }
+  
+  # srednia ogolna:
+  mean_a = mean(proba)
+  
+  # zmiennosc pomiedzy grupami:
+  SSA = sum(n_i*(mean_i - mean_a)^2)
+  MSA = SSA / (length(k) - 1)
+  #MSA
+  
+  # zmimennosc calkowita:
+  SST = sum((proba - mean_a)^2)
+  MST = SST / (length(proba) - 1)
+  #MST
+  
+  # zmiennosc wewnatrz grup:
+  SSE = SST - SSA
+  MSE = SSE / (length(proba) - length(k))
+  #MSE
+  
+  # statystyka F i p-value:
+  F = MSA / MSE
+  p_val = pf(F, length(k) - 1, length(proba) - length(k), lower.tail = FALSE)
+  
+  list(statistcs = F, p.value = p_val)
+}
 
 #----REGRESJA-------------------------------------------------------------------
 
