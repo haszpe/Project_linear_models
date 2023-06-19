@@ -1,3 +1,35 @@
+# POPRAWNOSC NAZW ZMIENNYCH -----------------------------------------------
+check_var_name <- function(vars, columns){
+  
+  czy_wszystkie_obecne <- FALSE
+  brakujaca_kolumna <- ""
+  zmienne <- c()
+  
+  while (!czy_wszystkie_obecne) {
+    czy_wszystkie_obecne <- TRUE
+    
+    for (var in vars) {
+      zmienne <- vars
+      if (!(var %in% columns)) {
+        czy_wszystkie_obecne <- FALSE
+        brakujaca_kolumna <- var
+        break
+      }
+    }
+    
+    if (!czy_wszystkie_obecne) {
+      print(paste("brak kolumny ", var))
+      vars <- readline(prompt = "podaj ponownie nazwy kolumn : ")
+      vars <- unlist(strsplit(vars, ", "))
+    }
+  }
+  
+  print("Kazda zmienna znajduje sie w danych")
+  return(vars)
+ 
+}
+
+
 #----NUMERIC CHECK--------------------------------------------------------------
 
 if_num <- function(proba){
@@ -175,7 +207,7 @@ regresja <- function(ind_variables, dep_variables)
   p.value.model <- 1 - pf(F_statistic, length(ind_variables), nrow(y) - ncol(X),
                           lower.tail = TRUE)
   # Obliczamy wartosc p dla testu statystycznego modelu, ktory informuje o istotnosci
-  # statystycznej modelu. WartoÅsc p jest prawdopodobienstwem uzyskania statystyki F wiekszej
+  # statystycznej modelu. WartoÄ¹sc p jest prawdopodobienstwem uzyskania statystyki F wiekszej
   # lub rownej obliczonej statystyce F.
   
   # Tworzymy ramke danych "statistics_table" zawierajaca statystyki modelu.
