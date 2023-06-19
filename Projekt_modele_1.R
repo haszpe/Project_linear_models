@@ -8,9 +8,8 @@ Zygmunt Latyszewicz   121724'
 
 source("~/Documents/GitHub/Project_linear_models/functions.R")
 
-#----PROGRAM--------------------------------------------------------------------
+#----WCZYTANIE DANYCH-----------------------------------------------------------
 
-#Wczytanie danych:
 'Wczytanie pliku z danymi ze sciezki podanej przez uzytkownika  -
      > zdefiniowac w dokumentacji format pliku csv'
 
@@ -26,7 +25,7 @@ attach(data)
 naszym programie do przeprowadzenia danej analizy"
 
 analiza <- as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic? \n
-                          Do wyboru masz: (1)T-student, (2)regresja, (3)ANOVA"))
+                          Do wyboru masz: (1)T-student, (2)regresja, (3)ANOVA. "))
 
 
 while (TRUE) {
@@ -35,20 +34,21 @@ while (TRUE) {
     
     t_stud <-  as.integer(readline(prompt = "Jaki test T-studenta chcesz przepowadzic? \n
                               Masz do wyboru: (1)one-sample, (2)two-sample independent, 
-                              (3)two-sample dependent"))
+                              (3)two-sample dependent. "))
     
     if(t_stud == 1) {
       print('...dla jednej proby.')
-      proba <- readline(prompt = 'Jaka zmienna chcesz przetestowac?')
+      proba <- readline(prompt = 'Jaka zmienna chcesz przetestowac? ')
       if_num(proba)
       if_norm(proba)
       mo <- readline(prompt = 'Testowana srednia:')
-      alt <-readline(prompt = 'Alternatywa:')
+      alt <-readline(prompt = 'Alternatywa? (greater, lesser, none) ')
       t_test_jedna_niezal(proba, mo, alt)
+      
     } else if(t_stud ==2){
       print("two-sample independent")
-      proba_1 <-readline(prompt = 'Proba pierwsza:')
-      proba_2 <- readline(prompt = 'Proba druga:')
+      proba_1 <-readline(prompt = 'Proba pierwsza: ')
+      proba_2 <- readline(prompt = 'Proba druga: ')
       
       if_num(proba_1)
       if_norm(proba_1)
@@ -57,8 +57,9 @@ while (TRUE) {
       
       homo_var(proba_1, proba_2)
       
-      alt <-readline(prompt = 'Alternatywa: (greater, lesser, none')
+      alt <-readline(prompt = 'Alternatywa? (greater, lesser, none) ')
       t_test_dwie_niezal(proba_1, proba_2, alt)
+      
     } else {
       print('...dla dwoch prob zaleznych.')
       proba_1 <-readline(prompt = 'Proba pierwsza:')
@@ -70,20 +71,21 @@ while (TRUE) {
       if_norm(proba_2)
       homo_var(proba_1, proba_2)
       
-      alt <-readline(prompt = 'Alternatywa: (greater, lesser, none')
+      alt <-readline(prompt = 'Alternatywa? (greater, lesser, none) ')
       t_test_dwie_zal(proba_1, proba_2, alt)
+      
     }
   } else if (analiza == 2) {
     print("Przeprowadzam regresje.")
     columns <- colnames(data)
     zalezna <- readline(prompt = "Jaka kolumna z pliku wejsciowego jest zmienna zalezna?
-                              *Zmienna musi byc numeryczna : ")
+                              (zmienna musi byc numeryczna) ")
     
     zalezna <- check_var_name(zalezna, columns)
     
     
     niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?
-                          Wpisz nazwy kolumn bez cudzyslwowu i po przecinkach : ")
+                          (wpisz nazwy kolumn bez cudzyslwowu i po przecinkach) ")
     niezalezne <- unlist(strsplit(niezalezne, ", "))
     
     niezalezne <- check_var_name(niezalezne, columns)
@@ -92,11 +94,12 @@ while (TRUE) {
     
   } else if (analiza == 3) {
     print("Przeprowadzam ANOVE.")
+    ###     MIEJSCE NA ANOVE
     break
-  } else{
-    print(paste("Bledny numer analizy : ", analiza))
-    print("Do wyboru masz: (1)T-student, (2)regresja, (3)ANOVA")
-    analiza <-  as.integer(readline(prompt = "podaj ponownie numer analizy :"))
     
+  } else{
+    print(paste("Bledny numer analizy.", analiza))
+    print("Do wyboru masz: (1)T-student, (2)regresja, (3)ANOVA")
+    analiza <-  as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic? "))
   }
 }
