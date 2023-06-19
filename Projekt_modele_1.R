@@ -74,14 +74,20 @@ if (analiza == 'T-student') {
   }
 } else if (analiza == 'regresja') {
   print("Przeprowadzam regresje.")
+  columns <- colnames(data)
   zalezna <- readline(prompt = "Jaka kolumna z pliku wejsciowego jest zmienna zalezna?
-                              *Zmienna musi byc numeryczna")
+                              *Zmienna musi byc numeryczna : ")
   
+  zalezna <- check_var_name(zalezna, columns)
+  
+
   niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?
-                          Wpisz nazwy kolumn bez cudzyslwowu i po przecinkach")
+                          Wpisz nazwy kolumn bez cudzyslwowu i po przecinkach : ")
   niezalezne <- unlist(strsplit(niezalezne, ", "))
   
-  regresja(niezalezne, zalezne)
+  niezalezne <- check_var_name(niezalezne, columns)
+  
+  regresja(niezalezne, zalezna)
 } else if (analiza == 'ANOVA') {
   print("Przeprowadzam ANOVE.")
 } else{
