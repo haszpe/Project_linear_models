@@ -19,6 +19,12 @@ data <- read_delim(delim = ";",
 
 attach(data)
 
+#----DANE O ROZKLADZIE NORMALNYM------------------------------------------------
+'
+a <- rnorm(20, 16, 4)
+b <- rnorm(20, 12, 6)
+c <- rnorm(20, 25, 3)
+'
 #----WYBOR PRZEPROWADZANEJ ANALIZY----------------------------------------------
 
 "Definiujemy zmienna funk, ktora okresla jaka funkcja zostanie wykorzystana w
@@ -26,7 +32,6 @@ naszym programie do przeprowadzenia danej analizy"
 
 analiza <- as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic? \n
                           Do wyboru masz: (1)T-student, (2)regresja, (3)ANOVA. "))
-
 
 while (TRUE) {
   if(analiza == 1) {
@@ -102,4 +107,14 @@ while (TRUE) {
     print("Do wyboru masz: (1)T-student, (2)regresja, (3)ANOVA")
     analiza <-  as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic? "))
   }
+}
+
+#----ZAPISANIE WYNIKOW----------------------------------------------------------
+#to jest opcjonalnie
+
+zapis <- readline(prompt = "Czy chcesz zapisaæ wyniki?(t/n)")
+if(zapis == t){
+  #jak sie zapisuje plik? XD
+} else if(zapis == n){
+  print("Koniec.")
 }

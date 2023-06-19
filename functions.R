@@ -1,13 +1,10 @@
 #----POPRAWNOSC NAZW ZMIENNYCH--------------------------------------------------
 check_var_name <- function(vars, columns){
-  
   czy_wszystkie_obecne <- FALSE
   brakujaca_kolumna <- ""
   zmienne <- c()
-  
   while (!czy_wszystkie_obecne) {
     czy_wszystkie_obecne <- TRUE
-    
     for (var in vars) {
       zmienne <- vars
       if (!(var %in% columns)) {
@@ -16,24 +13,21 @@ check_var_name <- function(vars, columns){
         break
       }
     }
-    
     if (!czy_wszystkie_obecne) {
-      print(paste("brak kolumny ", var))
-      vars <- readline(prompt = "podaj ponownie nazwy kolumn : ")
+      print(paste("Brak kolumny ", var, "."))
+      vars <- readline(prompt = "Podaj ponownie nazwy kolumn: ")
       vars <- unlist(strsplit(vars, ", "))
     }
   }
-  
-  print("Kazda zmienna znajduje sie w danych")
+  print("Kazda zmienna znajduje sie w danych.")
   return(vars)
- 
 }
-
 
 #----NUMERIC CHECK--------------------------------------------------------------
 
 if_num <- function(proba){
   stopifnot(is.numeric(proba))
+  #print warning: dane nie sa numeryczne
 }
 
 #----NORMALNOSC ROZKLADU--------------------------------------------------------
@@ -41,6 +35,7 @@ if_num <- function(proba){
 if_norm <- function(proba){
   x = shapiro.test(proba)
   stopifnot(x[2] < 0.05)
+  #print warning: dane nie maja rozkladu normalnego
 }
 
 #----JEDNORODNOSC WARIANCJI-----------------------------------------------------
@@ -48,6 +43,7 @@ if_norm <- function(proba){
 homo_var <- function(proba_1, proba_2) {
   x <- var.test(proba_1, proba_2)
   stopifnot(x$p.value > 0.05)
+  #print warning: wariancje nie sa jednorodne
 }
 
 #----TESTY T-STUDENTA-----------------------------------------------------------
