@@ -49,9 +49,6 @@ while (run == TRUE){
     if(t_stud == 1) {
       print('...dla jednej proby.')
       proba <- as.matrix(data[readline(prompt = 'Jaka zmienna chcesz przetestowac?   ')])
-
-      
-      proba <- as.matrix(data[proba])
       if_num(proba)
       if_norm(proba)
       
@@ -63,13 +60,11 @@ while (run == TRUE){
       run <- FALSE
     } else if(t_stud ==2){
       print("...dla dwoch prob niezaleznych.")
-      proba_1 <-readline(prompt = 'Proba pierwsza:   ')
-      proba_2 <- readline(prompt = 'Proba druga:   ')
+      proba_1 <-as.matrix(data[readline(prompt = 'Proba pierwsza:   ')])
+      proba_2 <- as.matrix(data[readline(prompt = 'Proba druga:   ')])
       
-      proba_1 <- as.matrix(data[proba_1])
       if_num(proba_1)
       if_norm(proba_1)
-      proba_2 <- as.matrix(data[proba_2])
       if_num(proba_2)
       if_norm(proba_2)
       homo_var(proba_1, proba_2)
@@ -81,10 +76,9 @@ while (run == TRUE){
       
     } else {
       print('...dla dwoch prob zaleznych.')
-      proba_1 <-readline(prompt = 'Proba pierwsza:   ')
-      proba_2 <- readline(prompt = 'Proba druga:   ')
+      proba_1 <-as.matrix(data[readline(prompt = 'Proba pierwsza:   ')])
+      proba_2 <- as.matrix(data[readline(prompt = 'Proba druga:   ')])
       
-      proba_1 <- as.matrix(data[proba_1])
       if_num(proba_1)
       if_norm(proba_1)
       if_num(proba_2)
