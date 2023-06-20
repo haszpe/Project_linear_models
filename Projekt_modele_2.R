@@ -7,17 +7,17 @@ Zygmunt Latyszewicz   121724'
 
 
 
-print("Do wyboru masz: (1) efekty modelu, (2)parametry wariancji, (3)oba")
+print("Do wyboru masz: (1) efekty stałe i losowe, (2)estymatory modelu, (3)oba")
 wybor <-  as.integer(readline(prompt = ""))
 run <- TRUE
 
 while (run == TRUE) {
   if(wybor == 1) {
-    print("Przeprowadzam efekty modelu ")
+    print("Przeprowadzam analizę efektów stałych i losowych ")
     run <-FALSE
       
   } else if (wybor == 2) {
-    print("Przeprowadzam regresje ")
+    print("Przeprowadzam analizę estymatorów modelu ")
     run <-FALSE
     
   } else if (analiza == 3) {
