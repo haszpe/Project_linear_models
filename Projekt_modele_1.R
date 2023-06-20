@@ -15,7 +15,7 @@ source("~/Documents/GitHub/Project_linear_models/functions.R")
 
 library(tidyverse)
 data <- read_delim(delim = ";", 
-  file = "http://theta.edu.pl/wp-content/uploads/2012/02/DanePakietyStatystyczne2.csv")
+                   file = "http://theta.edu.pl/wp-content/uploads/2012/02/DanePakietyStatystyczne2.csv")
 
 attach(data)
 
@@ -49,6 +49,7 @@ while (TRUE) {
       mo <- readline(prompt = 'Testowana srednia:')
       alt <-readline(prompt = 'Alternatywa? (greater, lesser, none) ')
       t_test_jedna_niezal(proba, mo, alt)
+      break
       
     } else if(t_stud ==2){
       print("two-sample independent")
@@ -64,6 +65,7 @@ while (TRUE) {
       
       alt <-readline(prompt = 'Alternatywa? (greater, lesser, none) ')
       t_test_dwie_niezal(proba_1, proba_2, alt)
+      break
       
     } else {
       print('...dla dwoch prob zaleznych.')
@@ -78,6 +80,7 @@ while (TRUE) {
       
       alt <-readline(prompt = 'Alternatywa? (greater, lesser, none) ')
       t_test_dwie_zal(proba_1, proba_2, alt)
+      break
       
     }
   } else if (analiza == 2) {
@@ -96,10 +99,22 @@ while (TRUE) {
     niezalezne <- check_var_name(niezalezne, columns)
     
     regresja(niezalezne, zalezna)
+    break
     
   } else if (analiza == 3) {
     print("Przeprowadzam ANOVE.")
-    ###     MIEJSCE NA ANOVE
+    
+    columns <- colnames(data)
+    
+    zmienna_liczbowa <- readline(prompt = "podaj nazwe kolumny zawierajaca dane liczbowe : ")
+    zmienna_liczbowa <- check_var_name(zmienna_liczbowa, columns)
+    
+    zmienna_grupujaca <- readline(prompt = "podaj kolumne grupujaca : ")
+    zmienna_grupujaca <- unlist(strsplit(zmienna_grupujaca, ", "))
+    zmienna_grupujaca <- check_var_name(zmienna_grupujaca, columns)
+      
+    print(ANOVA(as.matrix(dane[zmienna_liczbowa]),as.matrix(dane[zmienna_grupujaca])))
+    
     break
     
   } else{
