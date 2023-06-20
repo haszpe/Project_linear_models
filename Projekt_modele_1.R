@@ -20,11 +20,11 @@ data <- read_delim(delim = ";",
 attach(data)
 
 #----DANE O ROZKLADZIE NORMALNYM------------------------------------------------
-'
+
 a <- rnorm(20, 16, 4)
 b <- rnorm(20, 12, 6)
 c <- rnorm(20, 25, 3)
-'
+
 #----WYBOR PRZEPROWADZANEJ ANALIZY----------------------------------------------
 
 "Definiujemy zmienna funk, ktora okresla jaka funkcja zostanie wykorzystana w
@@ -47,7 +47,7 @@ while (TRUE) {
       if_num(proba)
       if_norm(proba)
       mo <- readline(prompt = 'Testowana srednia:')
-      alt <-readline(prompt = 'Alternatywa? (greater, lesser, none) ')
+      alt <-readline(prompt = 'Alternatywa? (greater/lesser/none) ')
       t_test_jedna_niezal(proba, mo, alt)
       break
       
@@ -63,14 +63,14 @@ while (TRUE) {
       
       homo_var(proba_1, proba_2)
       
-      alt <-readline(prompt = 'Alternatywa? (greater, lesser, none) ')
+      alt <-readline(prompt = 'Alternatywa? (greater/lesser/none) ')
       t_test_dwie_niezal(proba_1, proba_2, alt)
       break
       
     } else {
       print('...dla dwoch prob zaleznych.')
-      proba_1 <-readline(prompt = 'Proba pierwsza:')
-      proba_2 <- readline(prompt = 'Proba druga:')
+      proba_1 <-readline(prompt = 'Proba pierwsza: ')
+      proba_2 <- readline(prompt = 'Proba druga: ')
       
       if_num(proba_1)
       if_norm(proba_1)
@@ -78,7 +78,7 @@ while (TRUE) {
       if_norm(proba_2)
       homo_var(proba_1, proba_2)
       
-      alt <-readline(prompt = 'Alternatywa? (greater, lesser, none) ')
+      alt <-readline(prompt = 'Alternatywa? (greater/lesser/none) ')
       t_test_dwie_zal(proba_1, proba_2, alt)
       break
       
@@ -106,23 +106,30 @@ while (TRUE) {
     
     columns <- colnames(data)
     
-    zmienna_liczbowa <- readline(prompt = "podaj nazwe kolumny zawierajaca dane liczbowe : ")
+    # ustalenie zmiennych liczbowej i grupujacej:
+    zmienna_liczbowa <- readline(prompt = "Podaj nazwe kolumny zawierajaca dane liczbowe 
+                                 (wpisz nazwe kolumny bez cudzyslowu) ")
     zmienna_liczbowa <- check_var_name(zmienna_liczbowa, columns)
     
-    zmienna_grupujaca <- readline(prompt = "podaj kolumne grupujaca : ")
+    zmienna_grupujaca <- readline(prompt = "Podaj kolumne grupujaca
+                                  (wpisz nazwe kolumny bez cudzyslowu) ")
     zmienna_grupujaca <- unlist(strsplit(zmienna_grupujaca, ", "))
     zmienna_grupujaca <- check_var_name(zmienna_grupujaca, columns)
     
-    p_value <- ANOVA(as.matrix(dane[zmienna_liczbowa]),as.matrix(dane[zmienna_grupujaca]))
-    p_value <- p_value$p.value
-    print(p_value)
-
-       if (p_value < 0.05){
-         # post hoc
+    # wywolanie ANOVY:
+    wynik <- ANOVA(as.matrix(data[zmienna_liczbowa]),as.matrix(data[zmienna_grupujaca]))
+    print(wynik)
+    
+    # opcja wykonania testu post-hoc:
+    if (p_value < 0.05){
+       Tuk <- realine(prompt = "Czy chcesz wykonac test Tukeya HSD? (y/n) ")
+       if (Tuk == y){
+         #post_hoc()
        }
-
-
-       
+       else{
+         break
+       }
+      }
     break
     
   } else{
@@ -131,3 +138,4 @@ while (TRUE) {
     analiza <-  as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic? "))
   }
 }
+print("Koniec analizy.")

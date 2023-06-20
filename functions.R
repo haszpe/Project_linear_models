@@ -136,12 +136,10 @@ ANOVA <- function(proba, alfa) {
   #MSE
   
   # statystyka F i p-value:
-  F = MSA / MSE
-  p_val = pf(F, length(k) - 1, length(proba) - length(k), lower.tail = FALSE)
+  Fish = MSA / MSE
+  p_val = pf(Fish, length(k) - 1, length(proba) - length(k), lower.tail = FALSE)
   
-  list(statistcs = F, p.value = p_val)
-
-  return(p_val)
+  return(list(F_statistcs = Fish, p.value = p_val))
 }
 
 #----POST HOC-------------------------------------------------------------------
