@@ -93,16 +93,26 @@ while (run == TRUE){
   } else if (analiza == 2) {
     print("Przeprowadzam regresje.")
     columns <- colnames(data)
-    zalezna <- readline(prompt = "Jaka kolumna z pliku wejsciowego jest zmienna zalezna?   
-    (zmienna musi byc numeryczna)")
+
     
+    niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?
+                          (wpisz nazwy kolumn bez cudzyslwowu i po przecinkach) ")
+    niezalezne <- unlist(strsplit(niezalezne, ", "))
+    niezalezne <- check_var_name(niezalezne, columns)
+    
+    
+    zalezna <- readline(prompt = "Jaka kolumna z pliku wejsciowego jest zmienna zalezna?
+                              (zmienna musi byc numeryczna) ")
     zalezna <- check_var_name(zalezna, columns)
     
-    niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?   
-    (wpisz nazwy kolumn bez cudzyslwowu i po przecinkach)")
-    niezalezne <- unlist(strsplit(niezalezne, ", "))
     
-    niezalezne <- check_var_name(niezalezne, columns)
+    
+    regresja(niezalezne, zalezna)
+
+
+
+
+       
     
     res <- regresja(niezalezne, zalezna)
     print(res)
