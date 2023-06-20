@@ -3,10 +3,9 @@ Krzysztof Jakubowski  121992
 Hanna Peciak          113752 
 Zygmunt Latyszewicz   121724'
 
-
 #----WCZYTANIE FUNKCJI----------------------------------------------------------
 
-source("functions.R")
+source("~/Documents/GitHub/Project_linear_models/functions.R")
 
 #----WCZYTANIE DANYCH-----------------------------------------------------------
 
@@ -15,16 +14,15 @@ source("functions.R")
 
 library(tidyverse)
 library(stats)
+
 data <- read_delim(delim = ";", 
                    file = "http://theta.edu.pl/wp-content/uploads/2012/02/DanePakietyStatystyczne2.csv")
-
 attach(data)
 
-#----DANE O ROZKLADZIE NORMALNYM------------------------------------------------
-
-tabelka <- tibble(a = rnorm(20, 16, 4),
-                  b = rnorm(20, 12, 6),
-                  c = rnorm(20, 25, 3))
+# dane z rozkladu normalnego:
+tabelka <- tibble(a = rnorm(30, 16, 4),
+                   b = as_factor(c(rep(0, 10), rep(1, 10), rep(2, 10))))
+#data <- tabelka
 
 #----WYBOR PRZEPROWADZANEJ ANALIZY----------------------------------------------
 
@@ -123,34 +121,35 @@ while (run == TRUE){
     (wpisz nazwe kolumny bez cudzyslowu)   ")
     zmienna_liczbowa <- check_var_name(zmienna_liczbowa, columns)
     zmienna_liczbowa <- as.matrix(zmienna_liczbowa)
-    if_num(zmienna_liczbowa)
-    #if_norm(zmienna_liczbowa)
+    if_num(data[zmienna_liczbowa[1]])
+    if_norm(data[zmienna_liczbowa[1]])
     
     zmienna_grupujaca <- readline(prompt = "Podaj kolumne grupujaca:   
     (wpisz nazwe kolumny bez cudzyslowu)  ")
-    zmienna_grupujaca <- unlist(strsplit(zmienna_grupujaca, ", "))
+    #zmienna_grupujaca <- unlist(strsplit(zmienna_grupujaca, ", "))
     zmienna_grupujaca <- check_var_name(zmienna_grupujaca, columns)
     zmienna_grupujaca <- as.matrix(zmienna_grupujaca)
-    if_num(zmienna_grupujaca)
-    #if_norm(zmienna_grupujaca)
+    if_num(data[zmienna_grupujaca[1]])
     
     #homo_var(zmienna_liczbowa, zmienna_grupujaca)
     
     # wywolanie ANOVY:
-    res <- ANOVA(as.matrix(data[zmienna_liczbowa]),as.matrix(data[zmienna_grupujaca]))
+    res <- ANOVA(as.matrix(data[zmienna_liczbowa[1]]),as.matrix(data[zmienna_grupujaca[1]]))
+    print(res)
     
     # opcja wykonania testu post-hoc:
     if (res$p.value < 0.05){
-       Tuk <- realine(prompt = "Czy chcesz wykonac test Tukeya HSD? (y/n)   ")
-       if (Tuk == y){
-         res <- post_hoc(zmienna_liczbowa, zmienna_grupujaca)
+       Tuk <- readline(prompt = "Czy chcesz wykonac test Tukeya HSD? (y/n)   ")
+       if (Tuk == "y"){
+         res <- post_hoc(data[zmienna_liczbowa[1]], data[zmienna_grupujaca[1]])
          print(res)
          run <- FALSE
        }
        else{
          run <- FALSE
        }
-  }
+    }
+    run <- FALSE
     } else{
     print(paste("Bledny numer analizy.", analiza))
     print("Do wyboru masz: (1) T-student, (2) regresja, (3) ANOVA")

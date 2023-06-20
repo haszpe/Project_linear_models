@@ -26,6 +26,7 @@ check_var_name <- function(vars, columns){
 #----NUMERIC CHECK--------------------------------------------------------------
 
 if_num <- function(proba){
+  proba <- as.matrix(proba)
   if(is.numeric(proba))
   {
     print("Zmienna jest liczbowa.")
@@ -38,6 +39,7 @@ if_num <- function(proba){
 #----NORMALNOSC ROZKLADU--------------------------------------------------------
 
 if_norm <- function(proba){
+  proba <- as.matrix(proba)
   x = shapiro.test(proba)
   if(x[2] < 0.05)
   {
@@ -158,9 +160,12 @@ ANOVA <- function(proba, alfa) {
 
 #----POST HOC-------------------------------------------------------------------
 
-# testem post hoc uzytym przez nas jest test Tukeya (HSD - Honest Significant Differences)
+# testem post hoc uzytym jest test Tukeya (HSD - Honest Significant Differences)
 post_hoc <- function(dane_liczbowe, zmienna_grupujaca){
+  dane_liczbowe <- as.matrix(dane_liczbowe)
+  zmienna_grupujaca <- as.matrix(zmienna_grupujaca)
   model <- aov(dane_liczbowe ~ zmienna_grupujaca)
+  print(model)
   wynik <- TukeyHSD(model)
   return(wynik)
 }
