@@ -142,6 +142,13 @@ ANOVA <- function(proba, alfa) {
   list(statistcs = F, p.value = p_val)
 }
 
+#----POST HOC-------------------------------------------------------------------
+
+# testem post hoc uzytym przez nas jest test Tukeya (HSD - Honest Significant Differences)
+post_hoc <- function(){
+  ###tutaj powinien byc test post hoc
+}
+
 #----REGRESJA-------------------------------------------------------------------
 
 regresja <- function(ind_variables, dep_variables){
