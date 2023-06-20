@@ -8,8 +8,7 @@ Zygmunt Łatyszewicz   121724'
 
 
 print("Do wyboru masz: (1) efekty modelu, (2)parametry wariancji, (3)oba")
-wybor <-  as.integer(readline(prompt = "chcesz otrzymać efekty modelu, 
-parametry wariancji, czy oba elementy? "))
+wybor <-  as.integer(readline(prompt = ""))
 
 
 while (TRUE) {
