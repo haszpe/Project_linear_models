@@ -63,7 +63,9 @@ while (TRUE) {
     } else if(t_stud ==2){
       print("...dla dwoch prob niezaleznych.")
       proba_1 <-readline(prompt = 'Proba pierwsza:   ')
+      proba_1 <- as.matrix(data[proba_1])
       proba_2 <- readline(prompt = 'Proba druga:   ')
+      proba_2 <- as.matrix(data[proba_2])
       
       if_num(proba_1)
       if_norm(proba_1)
@@ -79,7 +81,9 @@ while (TRUE) {
     } else {
       print('...dla dwoch prob zaleznych.')
       proba_1 <-readline(prompt = 'Proba pierwsza:   ')
+      proba_1 <- as.matrix(data[proba_1])
       proba_2 <- readline(prompt = 'Proba druga:   ')
+      proba_2 <- as.matrix(data[proba_2])
       
       if_num(proba_1)
       if_norm(proba_1)
