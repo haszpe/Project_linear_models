@@ -163,17 +163,18 @@ post_hoc <- function(){
 
 #----REGRESJA-------------------------------------------------------------------
 
-regresja <- function(ind_variables, dep_variables){
+regresja <- function(ind_variables, dep_variables)
+{
   # Funkcja regresja przyjmuje argumenty ind_variables i dep_variables, 
   # ktore reprezentuja nazwy zmiennych niezaleznych i zaleznych,
   # w postaci wektorow lancuchow znakow.
   
   # Wybieramy z danych tylko te kolumny, ktore odpowiadaja 
   # zmiennym niezaleznym i przypisujemy je do zmiennej X.
-  X <- select(dane, all_of(ind_variables))
+  X <- select(data, all_of(ind_variables))
   # Wybieramy z danych tylko ta kolumne, 
   # ktora odpowiada zmiennej zaleznej i przypisujemy ja do zmiennej y.
-  y <- select(dane, all_of(dep_variables))
+  y <- select(data, all_of(dep_variables))
   
   ones <- tibble(ones = rep(1, nrow(X)))
   
@@ -184,6 +185,7 @@ regresja <- function(ind_variables, dep_variables){
   
   # Obliczamy estymatory wspoczynnikow regresji.
   wspolczynnik <- solve(t(X) %*% X) %*% t(X) %*% y
+  
   
   # Tworzymy ramke danych "predicted" zawierajaca kolumne z samymi jedynkami.
   # Liczba wierszy tej ramki danych odpowiada liczbie obserwacji w X.
@@ -203,6 +205,7 @@ regresja <- function(ind_variables, dep_variables){
   predicted <- predicted %>% 
     mutate(predicted = predicted - 1)
   
+  
   # Laczymy ramki danych "predicted" i "y" kolumnowo, tworzac ramke danych "comparison" 
   # zawierajaca wartosci przewidywane i wartosci rzeczywiste. Nastepnie obliczamy reszty modelu 
   # jako roznice miedzy wartosciami przewidywanymi a wartosciami rzeczywistymi.
@@ -216,6 +219,7 @@ regresja <- function(ind_variables, dep_variables){
   # "res", ktora zawiera reszty modelu.
   res <- comparasion$residual[, 1]
   
+  
   # Obliczamy blad standardowy jako pierwiastek z sumy kwadratow reszt podzielonych przez 
   # (liczbe obserwacji - liczba zmiennych niezaleznych).
   S2e <- t(res) %*% res / (nrow(y) - ncol(X))
@@ -224,6 +228,7 @@ regresja <- function(ind_variables, dep_variables){
   # Obliczamy bledy standardowe wspolczynnikow regresji i wartosci t.
   seBeta <- sqrt(diag(c(S2e) * solve(t(X) %*% X)))
   t <- wspolczynnik / seBeta
+  
   
   # Obliczamy wartosci p, ktore sa dwukrotne wieksze od wartosci t.
   p.value.t <- 2 * pt(abs(t), nrow(y) - ncol(X), lower.tail = FALSE)
@@ -251,7 +256,7 @@ regresja <- function(ind_variables, dep_variables){
   p.value.model <- 1 - pf(F_statistic, length(ind_variables), nrow(y) - ncol(X),
                           lower.tail = TRUE)
   # Obliczamy wartosc p dla testu statystycznego modelu, ktory informuje o istotnosci
-  # statystycznej modelu. Wartosc p jest prawdopodobienstwem uzyskania statystyki F wiekszej
+  # statystycznej modelu. WartoĹsc p jest prawdopodobienstwem uzyskania statystyki F wiekszej
   # lub rownej obliczonej statystyce F.
   
   # Tworzymy ramke danych "statistics_table" zawierajaca statystyki modelu.
@@ -261,5 +266,6 @@ regresja <- function(ind_variables, dep_variables){
   # Wyswietlamy tabele ze statystykami modelu oraz tabele z estymatami wspolczynnikow.
   print(statistics_table)
   print(Coefficients)
+  
 }
 #-------------------------------------------------------------------------------
