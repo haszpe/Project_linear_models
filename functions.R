@@ -140,6 +140,8 @@ ANOVA <- function(proba, alfa) {
   p_val = pf(F, length(k) - 1, length(proba) - length(k), lower.tail = FALSE)
   
   list(statistcs = F, p.value = p_val)
+
+  return(p_val)
 }
 
 #----POST HOC-------------------------------------------------------------------
