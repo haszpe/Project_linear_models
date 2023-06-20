@@ -6,7 +6,7 @@ Zygmunt Latyszewicz   121724'
 
 #----WCZYTANIE FUNKCJI----------------------------------------------------------
 
-source("~/Documents/GitHub/Project_linear_models/functions.R")
+source("functions.R")
 
 #----WCZYTANIE DANYCH-----------------------------------------------------------
 
@@ -14,6 +14,7 @@ source("~/Documents/GitHub/Project_linear_models/functions.R")
      > zdefiniowac w dokumentacji format pliku csv'
 
 library(tidyverse)
+library(stats)
 data <- read_delim(delim = ";", 
                    file = "http://theta.edu.pl/wp-content/uploads/2012/02/DanePakietyStatystyczne2.csv")
 
@@ -21,9 +22,9 @@ attach(data)
 
 #----DANE O ROZKLADZIE NORMALNYM------------------------------------------------
 
-a <- rnorm(20, 16, 4)
-b <- rnorm(20, 12, 6)
-c <- rnorm(20, 25, 3)
+tabelka <- tibble(a = rnorm(20, 16, 4),
+                  b = rnorm(20, 12, 6),
+                  c = rnorm(20, 25, 3))
 
 #----WYBOR PRZEPROWADZANEJ ANALIZY----------------------------------------------
 
@@ -32,9 +33,9 @@ c <- rnorm(20, 25, 3)
 run = TRUE
 analiza <- as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic?   
  Do wyboru masz:
- (1)T-student,
- (2)regresja,
- (3)ANOVA, \n"))
+ (1) T-student,
+ (2) regresja,
+ (3) ANOVA, \n"))
 
 while (run == TRUE){
   if(analiza == 1) {
@@ -42,9 +43,9 @@ while (run == TRUE){
     
     t_stud <-  as.integer(readline(prompt = "Jaki test T-studenta chcesz przepowadzic?   
   Masz do wyboru:
-  (1)one-sample,
-  (2)two-sample independent,
-  (3)two-sample dependent, \n"))
+  (1) one-sample,
+  (2) two-sample independent,
+  (3) two-sample dependent, \n"))
     
     if(t_stud == 1) {
       print('...dla jednej proby.')
@@ -61,7 +62,7 @@ while (run == TRUE){
       
     } else if(t_stud ==2){
       print("...dla dwoch prob niezaleznych.")
-      proba_1 <-as.matrix(data[readline(prompt = 'Proba pierwsza:   ')])
+      proba_1 <- as.matrix(data[readline(prompt = 'Proba pierwsza:   ')])
       proba_2 <- as.matrix(data[readline(prompt = 'Proba druga:   ')])
       
       if_num(proba_1)
@@ -77,7 +78,7 @@ while (run == TRUE){
       
     } else {
       print('...dla dwoch prob zaleznych.')
-      proba_1 <-as.matrix(data[readline(prompt = 'Proba pierwsza:   ')])
+      proba_1 <- as.matrix(data[readline(prompt = 'Proba pierwsza:   ')])
       proba_2 <- as.matrix(data[readline(prompt = 'Proba druga:   ')])
       
       if_num(proba_1)
@@ -98,17 +99,18 @@ while (run == TRUE){
 
     
     niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?
-                          (wpisz nazwy kolumn bez cudzyslwowu i po przecinkach) ")
+    (wpisz nazwy kolumn bez cudzyslwowu i po przecinkach) ")
     niezalezne <- unlist(strsplit(niezalezne, ", "))
     niezalezne <- check_var_name(niezalezne, columns)
     
     
     zalezna <- readline(prompt = "Jaka kolumna z pliku wejsciowego jest zmienna zalezna?
-                              (zmienna musi byc numeryczna) ")
+    (zmienna musi byc numeryczna) ")
     zalezna <- check_var_name(zalezna, columns)
     
-    regresja(niezalezne, zalezna)
-    res <- "regresja(niezalezne, zalezna)"
+    res <- regresja(niezalezne, zalezna)
+    print(res$statistics$data)
+    print(res$Coefficients$data)
     run <- FALSE
     
   } else if (analiza == 3) {
@@ -120,14 +122,16 @@ while (run == TRUE){
     zmienna_liczbowa <- readline(prompt = "Podaj nazwe kolumny zawierajaca dane liczbowe:   
     (wpisz nazwe kolumny bez cudzyslowu)   ")
     zmienna_liczbowa <- check_var_name(zmienna_liczbowa, columns)
-    #if_num(zmienna_liczbowa)
+    zmienna_liczbowa <- as.matrix(zmienna_liczbowa)
+    if_num(zmienna_liczbowa)
     #if_norm(zmienna_liczbowa)
     
     zmienna_grupujaca <- readline(prompt = "Podaj kolumne grupujaca:   
     (wpisz nazwe kolumny bez cudzyslowu)  ")
     zmienna_grupujaca <- unlist(strsplit(zmienna_grupujaca, ", "))
     zmienna_grupujaca <- check_var_name(zmienna_grupujaca, columns)
-    #if_num(zmienna_grupujaca)
+    zmienna_grupujaca <- as.matrix(zmienna_grupujaca)
+    if_num(zmienna_grupujaca)
     #if_norm(zmienna_grupujaca)
     
     #homo_var(zmienna_liczbowa, zmienna_grupujaca)
@@ -136,10 +140,11 @@ while (run == TRUE){
     res <- ANOVA(as.matrix(data[zmienna_liczbowa]),as.matrix(data[zmienna_grupujaca]))
     
     # opcja wykonania testu post-hoc:
-    if (p_value < 0.05){
+    if (res$p.value < 0.05){
        Tuk <- realine(prompt = "Czy chcesz wykonac test Tukeya HSD? (y/n)   ")
        if (Tuk == y){
-         #post_hoc()
+         res <- post_hoc(zmienna_liczbowa, zmienna_grupujaca)
+         print(res)
          run <- FALSE
        }
        else{
@@ -148,10 +153,10 @@ while (run == TRUE){
   }
     } else{
     print(paste("Bledny numer analizy.", analiza))
-    print("Do wyboru masz: (1)T-student, (2)regresja, (3)ANOVA")
+    print("Do wyboru masz: (1) T-student, (2) regresja, (3) ANOVA")
     analiza <-  as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic?   "))
     break
   }
 }
-print(res)
+
 print("Koniec analizy.")

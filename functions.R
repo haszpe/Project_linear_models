@@ -28,13 +28,11 @@ check_var_name <- function(vars, columns){
 if_num <- function(proba){
   if(is.numeric(proba))
   {
-    print("zmienna jest liczbowa")
+    print("Zmienna jest liczbowa.")
   }
   else{
-    stoo("Zmienna NIE jest liczbowa")
-    
+    stop("UWAGA: Nie mozna przeprowadzic analizy: zmienna NIE jest liczbowa.")
   }
-  
 }
 
 #----NORMALNOSC ROZKLADU--------------------------------------------------------
@@ -43,10 +41,10 @@ if_norm <- function(proba){
   x = shapiro.test(proba)
   if(x[2] < 0.05)
   {
-    stop("brak normalnosci ")
+    stop("UWAGA: Nie mozna przeprowadzic analizy: brak normalnosci rozkladu.")
   }
   else {
-    print("normalnosc spelniona ")
+    print("Warunek na normalnosc rozkladu spelniony.")
   }
 }
 
@@ -54,8 +52,12 @@ if_norm <- function(proba){
 
 homo_var <- function(proba_1, proba_2) {
   x <- var.test(proba_1, proba_2)
-  stopifnot(x$p.value > 0.05)
-  #print warning: wariancje nie sa jednorodne
+  if(x$p.value > 0.05){
+    stop("UWAGA: Nie mozna przeprowadzic analizy: wariancje nie sa jednorodne.")
+  }
+  else {
+    print("Wariancje sa jednorodne.")
+  }
 }
 
 #----TESTY T-STUDENTA-----------------------------------------------------------
@@ -157,8 +159,10 @@ ANOVA <- function(proba, alfa) {
 #----POST HOC-------------------------------------------------------------------
 
 # testem post hoc uzytym przez nas jest test Tukeya (HSD - Honest Significant Differences)
-post_hoc <- function(){
-  ###tutaj powinien byc test post hoc
+post_hoc <- function(dane_liczbowe, zmienna_grupujaca){
+  model <- aov(dane_liczbowe ~ zmienna_grupujaca)
+  wynik <- TukeyHSD(model)
+  return(wynik)
 }
 
 #----REGRESJA-------------------------------------------------------------------
