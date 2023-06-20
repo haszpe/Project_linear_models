@@ -113,7 +113,8 @@ while (TRUE) {
     zmienna_grupujaca <- unlist(strsplit(zmienna_grupujaca, ", "))
     zmienna_grupujaca <- check_var_name(zmienna_grupujaca, columns)
     
-    p_value <- (ANOVA(as.matrix(dane[zmienna_liczbowa]),as.matrix(dane[zmienna_grupujaca])))
+    p_value <- ANOVA(as.matrix(dane[zmienna_liczbowa]),as.matrix(dane[zmienna_grupujaca]))
+    p_value <- p_value$p.value
     print(p_value)
 
        if (p_value < 0.05){
