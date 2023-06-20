@@ -264,8 +264,10 @@ regresja <- function(ind_variables, dep_variables)
                              value = c(adjusted_R2, p.value.model, F_statistic))
   
   # Wyswietlamy tabele ze statystykami modelu oraz tabele z estymatami wspolczynnikow.
-  print(statistics_table)
-  print(Coefficients)
+  result_table <- tibble(statistics = nest(statistics_table),
+                         Coefficients = nest(Coefficients))
+  
+  return(result_table)
   
 }
 #-------------------------------------------------------------------------------
