@@ -29,14 +29,14 @@ c <- rnorm(20, 25, 3)
 
 #Definiujemy zmienna funk, ktora okresla jaka funkcja zostanie wykorzystana w
 #naszym programie do przeprowadzenia danej analizy
-
+run = TRUE
 analiza <- as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic?   
  Do wyboru masz:
  (1)T-student,
  (2)regresja,
  (3)ANOVA, \n"))
 
-while (TRUE) {
+while (run == TRUE){
   if(analiza == 1) {
     print("Przeprowadzam test T-studenta...")
     
@@ -48,8 +48,8 @@ while (TRUE) {
     
     if(t_stud == 1) {
       print('...dla jednej proby.')
-      proba <- readline(prompt = 'Jaka zmienna chcesz przetestowac?   ')
-      proba <- as.matrix(data[proba])
+      proba <- as.matrix(data[readline(prompt = 'Jaka zmienna chcesz przetestowac?   ')])
+      #proba <- as.matrix(data[proba])
       
       if_num(proba)
       if_norm(proba)
@@ -58,8 +58,7 @@ while (TRUE) {
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       res <- t_test_jedna_niezal(proba, mo, alt)
       print(res)
-      break
-      
+      run <- FALSE
     } else if(t_stud ==2){
       print("...dla dwoch prob niezaleznych.")
       proba_1 <-readline(prompt = 'Proba pierwsza:   ')
@@ -77,7 +76,7 @@ while (TRUE) {
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       res <- t_test_dwie_niezal(proba_1, proba_2, alt)
       print(res)
-      break
+      run <- FALSE
       
     } else {
       print('...dla dwoch prob zaleznych.')
@@ -95,8 +94,7 @@ while (TRUE) {
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       res <- t_test_dwie_zal(proba_1, proba_2, alt)
       print(res)
-      break
-      
+      run <- FALSE
     }
   } else if (analiza == 2) {
     print("Przeprowadzam regresje.")
@@ -115,7 +113,7 @@ while (TRUE) {
     
     res <- regresja(niezalezne, zalezna)
     print(res)
-    break
+    run <- FALSE
     
   } else if (analiza == 3) {
     print("Przeprowadzam ANOVE.")
@@ -151,13 +149,12 @@ while (TRUE) {
        else{
          break
        }
-      }
-    break
-    
-  } else{
+  }
+    } else{
     print(paste("Bledny numer analizy.", analiza))
     print("Do wyboru masz: (1)T-student, (2)regresja, (3)ANOVA")
     analiza <-  as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic?   "))
+    break
   }
 }
 print("Koniec analizy.")
