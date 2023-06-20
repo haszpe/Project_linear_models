@@ -49,10 +49,12 @@ while (run == TRUE){
     if(t_stud == 1) {
       print('...dla jednej proby.')
       proba <- as.matrix(data[readline(prompt = 'Jaka zmienna chcesz przetestowac?   ')])
-      #proba <- as.matrix(data[proba])
+
       
+      proba <- as.matrix(data[proba])
       if_num(proba)
       if_norm(proba)
+      
       mo <- readline(prompt = 'Testowana srednia:   ')
       mo <- as.numeric(mo)
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
@@ -62,15 +64,14 @@ while (run == TRUE){
     } else if(t_stud ==2){
       print("...dla dwoch prob niezaleznych.")
       proba_1 <-readline(prompt = 'Proba pierwsza:   ')
-      proba_1 <- as.matrix(data[proba_1])
       proba_2 <- readline(prompt = 'Proba druga:   ')
-      proba_2 <- as.matrix(data[proba_2])
       
+      proba_1 <- as.matrix(data[proba_1])
       if_num(proba_1)
       if_norm(proba_1)
+      proba_2 <- as.matrix(data[proba_2])
       if_num(proba_2)
       if_norm(proba_2)
-      
       homo_var(proba_1, proba_2)
       
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
@@ -81,10 +82,9 @@ while (run == TRUE){
     } else {
       print('...dla dwoch prob zaleznych.')
       proba_1 <-readline(prompt = 'Proba pierwsza:   ')
-      proba_1 <- as.matrix(data[proba_1])
       proba_2 <- readline(prompt = 'Proba druga:   ')
-      proba_2 <- as.matrix(data[proba_2])
       
+      proba_1 <- as.matrix(data[proba_1])
       if_num(proba_1)
       if_norm(proba_1)
       if_num(proba_2)
@@ -100,10 +100,9 @@ while (run == TRUE){
     print("Przeprowadzam regresje.")
     columns <- colnames(data)
     zalezna <- readline(prompt = "Jaka kolumna z pliku wejsciowego jest zmienna zalezna?   
-    (zmienna musi byc numeryczna) ")
+    (zmienna musi byc numeryczna)")
     
     zalezna <- check_var_name(zalezna, columns)
-    
     
     niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?   
     (wpisz nazwy kolumn bez cudzyslwowu i po przecinkach)")
@@ -137,8 +136,8 @@ while (run == TRUE){
     #homo_var(zmienna_liczbowa, zmienna_grupujaca)
     
     # wywolanie ANOVY:
-    wynik <- ANOVA(as.matrix(data[zmienna_liczbowa]),as.matrix(data[zmienna_grupujaca]))
-    print(wynik)
+    res <- ANOVA(as.matrix(data[zmienna_liczbowa]),as.matrix(data[zmienna_grupujaca]))
+    print(res)
     
     # opcja wykonania testu post-hoc:
     if (p_value < 0.05){
@@ -151,6 +150,7 @@ while (run == TRUE){
        }
   }
     } else{
+
     print(paste("Bledny numer analizy.", analiza))
     print("Do wyboru masz: (1)T-student, (2)regresja, (3)ANOVA")
     analiza <-  as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic?   "))
