@@ -32,9 +32,9 @@ c <- rnorm(20, 25, 3)
 
 analiza <- as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic?   
  Do wyboru masz:
- (1)T-student,
- (2)regresja,
- (3)ANOVA, \n"))
+ (1) T-student,
+ (2) regresja,
+ (3) ANOVA, \n"))
 
 while (TRUE) {
   if(analiza == 1) {
@@ -42,15 +42,15 @@ while (TRUE) {
     
     t_stud <-  as.integer(readline(prompt = "Jaki test T-studenta chcesz przepowadzic?   
   Masz do wyboru:
-  (1)one-sample,
-  (2)two-sample independent,
-  (3)two-sample dependent, \n"))
+  (1) one-sample,
+  (2) two-sample independent,
+  (3) two-sample dependent, \n"))
     
     if(t_stud == 1) {
       print('...dla jednej proby.')
       proba <- readline(prompt = 'Jaka zmienna chcesz przetestowac?   ')
-      if_num(proba)
-      if_norm(proba)
+      #if_num(proba)
+      #if_norm(proba)
       mo <- readline(prompt = 'Testowana srednia:   ')
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       t_test_jedna_niezal(proba, mo, alt)
@@ -61,12 +61,11 @@ while (TRUE) {
       proba_1 <-readline(prompt = 'Proba pierwsza:   ')
       proba_2 <- readline(prompt = 'Proba druga:   ')
       
-      if_num(proba_1)
-      if_norm(proba_1)
-      if_num(proba_2)
-      if_norm(proba_2)
-      
-      homo_var(proba_1, proba_2)
+      #if_num(proba_1)
+      #if_norm(proba_1)
+      #if_num(proba_2)
+      #if_norm(proba_2)
+      #homo_var(proba_1, proba_2)
       
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       t_test_dwie_niezal(proba_1, proba_2, alt)
@@ -77,11 +76,11 @@ while (TRUE) {
       proba_1 <-readline(prompt = 'Proba pierwsza:   ')
       proba_2 <- readline(prompt = 'Proba druga:   ')
       
-      if_num(proba_1)
-      if_norm(proba_1)
-      if_num(proba_2)
-      if_norm(proba_2)
-      homo_var(proba_1, proba_2)
+      #if_num(proba_1)
+      #if_norm(proba_1)
+      #if_num(proba_2)
+      #if_norm(proba_2)
+      #homo_var(proba_1, proba_2)
       
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       t_test_dwie_zal(proba_1, proba_2, alt)
@@ -92,10 +91,9 @@ while (TRUE) {
     print("Przeprowadzam regresje.")
     columns <- colnames(data)
     zalezna <- readline(prompt = "Jaka kolumna z pliku wejsciowego jest zmienna zalezna?   
-    (zmienna musi byc numeryczna) ")
+    (zmienna musi byc numeryczna)")
     
     zalezna <- check_var_name(zalezna, columns)
-    
     
     niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?   
     (wpisz nazwy kolumn bez cudzyslwowu i po przecinkach)")
@@ -136,9 +134,6 @@ while (TRUE) {
        Tuk <- realine(prompt = "Czy chcesz wykonac test Tukeya HSD? (y/n)   ")
        if (Tuk == y){
          #post_hoc()
-       }
-       else{
-         break
        }
       }
     break

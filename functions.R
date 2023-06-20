@@ -170,10 +170,10 @@ regresja <- function(ind_variables, dep_variables){
   
   # Wybieramy z danych tylko te kolumny, ktore odpowiadaja 
   # zmiennym niezaleznym i przypisujemy je do zmiennej X.
-  X <- select(dane, all_of(ind_variables))
+  X <- select(data, all_of(ind_variables))
   # Wybieramy z danych tylko ta kolumne, 
   # ktora odpowiada zmiennej zaleznej i przypisujemy ja do zmiennej y.
-  y <- select(dane, all_of(dep_variables))
+  y <- select(data, all_of(dep_variables))
   
   ones <- tibble(ones = rep(1, nrow(X)))
   
