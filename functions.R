@@ -34,8 +34,9 @@ if_num <- function(proba){
 
 if_norm <- function(proba){
   x = shapiro.test(proba)
-  stopifnot(x[2] < 0.05)
-  #print warning: dane nie maja rozkladu normalnego
+  return(x[2])
+
+  
 }
 
 #----JEDNORODNOSC WARIANCJI-----------------------------------------------------
