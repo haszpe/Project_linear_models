@@ -26,19 +26,28 @@ check_var_name <- function(vars, columns){
 #----NUMERIC CHECK--------------------------------------------------------------
 
 if_num <- function(proba){
-  if (is.numeric(proba == FALSE)){
-    stop('`wykryto nienumeryczne wartości zmiennej:', proba)
+  if(is.numeric(proba))
+  {
+    print("zmienna jest liczbowa")
   }
-  #print warning: dane nie sa numeryczne
+  else{
+    print("zmienna NIE jest liczbowa")
+    
+  }
+  
 }
 
 #----NORMALNOSC ROZKLADU--------------------------------------------------------
 
-if_norm <- function(proba){
+if_norm <- function(proba, alfa){
   x = shapiro.test(proba)
-  return(x[2])
-
-  
+  if(x[2] < alfa)
+  {
+    print("brak normalnosci ")
+  }
+  else {
+    print("normalnosc spelniona ")
+  }
 }
 
 #----JEDNORODNOSC WARIANCJI-----------------------------------------------------
