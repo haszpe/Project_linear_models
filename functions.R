@@ -39,9 +39,9 @@ if_num <- function(proba){
 
 #----NORMALNOSC ROZKLADU--------------------------------------------------------
 
-if_norm <- function(proba, alfa){
+if_norm <- function(proba){
   x = shapiro.test(proba)
-  if(x[2] < alfa)
+  if(x[2] < 0.05)
   {
     print("brak normalnosci ")
   }

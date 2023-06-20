@@ -49,11 +49,15 @@ while (TRUE) {
     if(t_stud == 1) {
       print('...dla jednej proby.')
       proba <- readline(prompt = 'Jaka zmienna chcesz przetestowac?   ')
+      proba <- as.matrix(data[proba])
+      
       if_num(proba)
       if_norm(proba)
       mo <- readline(prompt = 'Testowana srednia:   ')
+      mo <- as.numeric(mo)
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
-      t_test_jedna_niezal(proba, mo, alt)
+      res <- t_test_jedna_niezal(proba, mo, alt)
+      print(res)
       break
       
     } else if(t_stud ==2){
