@@ -1,7 +1,7 @@
 'AUTORZY:
 Krzysztof Jakubowski  121992
-Hanna Pęciak          113752 
-Zygmunt Łatyszewicz   121724'
+Hanna Peciak          113752 
+Zygmunt Latyszewicz   121724'
 
 'PROGRAM DO MODELU MIESZANEGO:'
 
