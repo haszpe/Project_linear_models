@@ -100,12 +100,12 @@ while (run == TRUE){
     print("Przeprowadzam regresje.")
     columns <- colnames(data)
     zalezna <- readline(prompt = "Jaka kolumna z pliku wejsciowego jest zmienna zalezna?   
-    (zmienna musi byc numeryczna)")
+    (zmienna musi byc numeryczna)   ")
     
     zalezna <- check_var_name(zalezna, columns)
     
     niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?   
-    (wpisz nazwy kolumn bez cudzyslwowu i po przecinkach)")
+    (wpisz nazwy kolumn bez cudzyslwowu i po przecinkach)   ")
     niezalezne <- unlist(strsplit(niezalezne, ", "))
     
     niezalezne <- check_var_name(niezalezne, columns)
@@ -121,13 +121,13 @@ while (run == TRUE){
     
     # ustalenie zmiennych liczbowej i grupujacej:
     zmienna_liczbowa <- readline(prompt = "Podaj nazwe kolumny zawierajaca dane liczbowe:   
-    (wpisz nazwe kolumny bez cudzyslowu)")
+    (wpisz nazwe kolumny bez cudzyslowu)   ")
     zmienna_liczbowa <- check_var_name(zmienna_liczbowa, columns)
     #if_num(zmienna_liczbowa)
     #if_norm(zmienna_liczbowa)
     
     zmienna_grupujaca <- readline(prompt = "Podaj kolumne grupujaca:   
-    (wpisz nazwe kolumny bez cudzyslowu)")
+    (wpisz nazwe kolumny bez cudzyslowu)  ")
     zmienna_grupujaca <- unlist(strsplit(zmienna_grupujaca, ", "))
     zmienna_grupujaca <- check_var_name(zmienna_grupujaca, columns)
     #if_num(zmienna_grupujaca)
@@ -157,4 +157,4 @@ while (run == TRUE){
     break
   }
 }
-print("Koniec analizy.")
+print("Koniec analizy. Milego dnia!")
