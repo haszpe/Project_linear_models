@@ -52,12 +52,14 @@ while (run == TRUE){
       if_num(proba)
       if_norm(proba)
       
-      mo <- readline(prompt = 'Testowana srednia:   ')
-      mo <- as.numeric(mo)
+      mo <- as.numeric(readline(prompt = 'Testowana srednia:   '))
+      
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
+      
       res <- t_test_jedna_niezal(proba, mo, alt)
       print(res)
       run <- FALSE
+      
     } else if(t_stud ==2){
       print("...dla dwoch prob niezaleznych.")
       proba_1 <-as.matrix(data[readline(prompt = 'Proba pierwsza:   ')])
@@ -70,6 +72,7 @@ while (run == TRUE){
       homo_var(proba_1, proba_2)
       
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
+      
       res <- t_test_dwie_niezal(proba_1, proba_2, alt)
       print(res)
       run <- FALSE
@@ -86,24 +89,34 @@ while (run == TRUE){
       homo_var(proba_1, proba_2)
       
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
+      
       res <- t_test_dwie_zal(proba_1, proba_2, alt)
       print(res)
       run <- FALSE
     }
   } else if (analiza == 2) {
     print("Przeprowadzam regresje.")
+    
     columns <- colnames(data)
     zalezna <- readline(prompt = "Jaka kolumna z pliku wejsciowego jest zmienna zalezna?   
     (zmienna musi byc numeryczna)   ")
+
+    niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?
+                          (wpisz nazwy kolumn bez cudzyslwowu i po przecinkach) ")
+    niezalezne <- unlist(strsplit(niezalezne, ", "))
+    niezalezne <- check_var_name(niezalezne, columns)
     
+    
+    zalezna <- readline(prompt = "Jaka kolumna z pliku wejsciowego jest zmienna zalezna?
+                              (zmienna musi byc numeryczna) ")
     zalezna <- check_var_name(zalezna, columns)
-    
+
     niezalezne <- readline(prompt = "Jakie kolumny sa zmiennymi niezaleznymi?   
     (wpisz nazwy kolumn bez cudzyslwowu i po przecinkach)   ")
     niezalezne <- unlist(strsplit(niezalezne, ", "))
     
-    niezalezne <- check_var_name(niezalezne, columns)
-    
+    regresja(niezalezne, zalezna)
+
     res <- regresja(niezalezne, zalezna)
     print(res)
     run <- FALSE
@@ -140,7 +153,7 @@ while (run == TRUE){
          #post_hoc()
        }
        else{
-         break
+         run = FALSE
        }
   }
     } else{
@@ -148,7 +161,7 @@ while (run == TRUE){
     print(paste("Bledny numer analizy.", analiza))
     print("Do wyboru masz: (1)T-student, (2)regresja, (3)ANOVA")
     analiza <-  as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic?   "))
-    break
+    run = FALSE
   }
 }
-print("Koniec analizy. Milego dnia!")
+print("Koniec analizy.")
