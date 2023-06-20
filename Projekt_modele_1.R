@@ -49,11 +49,16 @@ while (TRUE) {
     if(t_stud == 1) {
       print('...dla jednej proby.')
       proba <- readline(prompt = 'Jaka zmienna chcesz przetestowac?   ')
-      #if_num(proba)
-      #if_norm(proba)
+      
+      proba <- as.matrix(data[proba])
+      if_num(proba)
+      if_norm(proba)
+      
       mo <- readline(prompt = 'Testowana srednia:   ')
+      mo <- as.numeric(mo)
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
-      t_test_jedna_niezal(proba, mo, alt)
+      res <- t_test_jedna_niezal(proba, mo, alt)
+      print(res)
       break
       
     } else if(t_stud ==2){
@@ -61,11 +66,13 @@ while (TRUE) {
       proba_1 <-readline(prompt = 'Proba pierwsza:   ')
       proba_2 <- readline(prompt = 'Proba druga:   ')
       
-      #if_num(proba_1)
-      #if_norm(proba_1)
-      #if_num(proba_2)
-      #if_norm(proba_2)
-      #homo_var(proba_1, proba_2)
+      proba_1 <- as.matrix(data[proba_1])
+      if_num(proba_1)
+      if_norm(proba_1)
+      proba_2 <- as.matrix(data[proba_2])
+      if_num(proba_2)
+      if_norm(proba_2)
+      homo_var(proba_1, proba_2)
       
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       res <- t_test_dwie_niezal(proba_1, proba_2, alt)
@@ -77,11 +84,13 @@ while (TRUE) {
       proba_1 <-readline(prompt = 'Proba pierwsza:   ')
       proba_2 <- readline(prompt = 'Proba druga:   ')
       
-      #if_num(proba_1)
-      #if_norm(proba_1)
-      #if_num(proba_2)
-      #if_norm(proba_2)
-      #homo_var(proba_1, proba_2)
+      proba_1 <- as.matrix(data[proba_1])
+      if_num(proba_1)
+      if_norm(proba_1)
+      proba_2 <- as.matrix(data[proba_2])
+      if_num(proba_2)
+      if_norm(proba_2)
+      homo_var(proba_1, proba_2)
       
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       res <- t_test_dwie_zal(proba_1, proba_2, alt)
@@ -129,8 +138,8 @@ while (TRUE) {
     #homo_var(zmienna_liczbowa, zmienna_grupujaca)
     
     # wywolanie ANOVY:
-    wynik <- ANOVA(as.matrix(data[zmienna_liczbowa]),as.matrix(data[zmienna_grupujaca]))
-    print(wynik)
+    res <- ANOVA(as.matrix(data[zmienna_liczbowa]),as.matrix(data[zmienna_grupujaca]))
+    print(res)
     
     # opcja wykonania testu post-hoc:
     if (p_value < 0.05){

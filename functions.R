@@ -32,9 +32,7 @@ if_num <- function(proba){
   }
   else{
     print("zmienna NIE jest liczbowa")
-    
   }
-  
 }
 
 #----NORMALNOSC ROZKLADU--------------------------------------------------------
