@@ -57,7 +57,6 @@ while (run == TRUE){
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       
       res <- t_test_jedna_niezal(proba, mo, alt)
-      print(res)
       run <- FALSE
       
     } else if(t_stud ==2){
@@ -74,7 +73,6 @@ while (run == TRUE){
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       
       res <- t_test_dwie_niezal(proba_1, proba_2, alt)
-      print(res)
       run <- FALSE
       
     } else {
@@ -91,7 +89,6 @@ while (run == TRUE){
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       
       res <- t_test_dwie_zal(proba_1, proba_2, alt)
-      print(res)
       run <- FALSE
     }
   } else if (analiza == 2) {
@@ -112,7 +109,6 @@ while (run == TRUE){
     
     regresja(niezalezne, zalezna)
     res <- "regresja(niezalezne, zalezna)"
-    print(res)
     run <- FALSE
     
   } else if (analiza == 3) {
@@ -138,7 +134,6 @@ while (run == TRUE){
     
     # wywolanie ANOVY:
     res <- ANOVA(as.matrix(data[zmienna_liczbowa]),as.matrix(data[zmienna_grupujaca]))
-    print(res)
     
     # opcja wykonania testu post-hoc:
     if (p_value < 0.05){
@@ -158,4 +153,5 @@ while (run == TRUE){
     break
   }
 }
+print(res)
 print("Koniec analizy.")
