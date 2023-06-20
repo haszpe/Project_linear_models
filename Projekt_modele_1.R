@@ -68,7 +68,8 @@ while (TRUE) {
       #homo_var(proba_1, proba_2)
       
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
-      t_test_dwie_niezal(proba_1, proba_2, alt)
+      res <- t_test_dwie_niezal(proba_1, proba_2, alt)
+      print(res)
       break
       
     } else {
@@ -83,7 +84,8 @@ while (TRUE) {
       #homo_var(proba_1, proba_2)
       
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
-      t_test_dwie_zal(proba_1, proba_2, alt)
+      res <- t_test_dwie_zal(proba_1, proba_2, alt)
+      print(res)
       break
       
     }
@@ -101,7 +103,8 @@ while (TRUE) {
     
     niezalezne <- check_var_name(niezalezne, columns)
     
-    regresja(niezalezne, zalezna)
+    res <- regresja(niezalezne, zalezna)
+    print(res)
     break
     
   } else if (analiza == 3) {
