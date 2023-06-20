@@ -26,7 +26,9 @@ check_var_name <- function(vars, columns){
 #----NUMERIC CHECK--------------------------------------------------------------
 
 if_num <- function(proba){
-  stopifnot(is.numeric(proba))
+  if (is.numeric(proba == FALSE)){
+    stop('`wykryto nienumeryczne wartości zmiennej:', proba)
+  }
   #print warning: dane nie sa numeryczne
 }
 
