@@ -4,24 +4,52 @@ Hanna Peciak          113752
 Zygmunt Latyszewicz   121724'
 
 'PROGRAM DO MODELU MIESZANEGO:'
-
-
-
-print("Do wyboru masz: (1) efekty stałe i losowe, (2)estymatory modelu, (3)oba")
-wybor <-  as.integer(readline(prompt = ""))
 run <- TRUE
-
 while (run == TRUE) {
+  wybor <-  as.integer(readline(prompt = "Do wyboru masz: (1) efekty stałe i losowe, (2)estymatory modelu, (3)oba"))
+  
   if(wybor == 1) {
+    print('Wprowadź dane:')
+    y <- readline(prompt = 'Zmienne zależne')
+    X <- readline(prompt = 'Macierz efektów losowych')
+    Z <-readline(prompt = 'Macierz efektów stałych')
+    A <-readline(prompt = 'Macierz grupowania')
+    sigma_a <-as.integer(readline(prompt = 'Odchylenie efektów stałych'))
+    sigma_e <- as.integer(readline(prompt = 'Odchylenie efektów losowych'))
+    
     print("Przeprowadzam analizę efektów stałych i losowych ")
+    
+    result <- mme(y, X, Z, A, sigma_a, sigma_e)
+    print(result)
+    
     run <-FALSE
       
   } else if (wybor == 2) {
     print("Przeprowadzam analizę estymatorów modelu ")
+    
+    print('Wprowadź dane:')
+    y <- readline(prompt = 'Zmienne zależne')
+    X <- readline(prompt = 'Macierz efektów losowych')
+    Z <-readline(prompt = 'Macierz efektów stałych')
+    A <-readline(prompt = 'Macierz grupowania')
+    
+    result <- EM(y, X, Z, A, sigma_a, sigma_e,tmp_threshold)
+    print(result)  
     run <-FALSE
     
   } else if (analiza == 3) {
     print("oba elementy ")
+    print('Wprowadź dane:')
+    y <- readline(prompt = 'Zmienne zależne')
+    X <- readline(prompt = 'Macierz efektów losowych')
+    Z <-readline(prompt = 'Macierz efektów stałych')
+    A <-readline(prompt = 'Macierz grupowania')
+    sigma_a <-as.integer(readline(prompt = 'Odchylenie efektów stałych'))
+    sigma_e <- as.integer(readline(prompt = 'Odchylenie efektów losowych'))
+    result_1 <- mme(y, X, Z, A, sigma_a, sigma_e)
+    result_2 <- EM(y, X, Z, A, sigma_a, sigma_e,tmp_threshold)
+    
+    print(result_1, result_2)
     run <-FALSE
     
   } else{
