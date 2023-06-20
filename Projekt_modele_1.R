@@ -112,9 +112,16 @@ while (TRUE) {
     zmienna_grupujaca <- readline(prompt = "podaj kolumne grupujaca : ")
     zmienna_grupujaca <- unlist(strsplit(zmienna_grupujaca, ", "))
     zmienna_grupujaca <- check_var_name(zmienna_grupujaca, columns)
-      
-    print(ANOVA(as.matrix(dane[zmienna_liczbowa]),as.matrix(dane[zmienna_grupujaca])))
     
+    p_value <- (ANOVA(as.matrix(dane[zmienna_liczbowa]),as.matrix(dane[zmienna_grupujaca])))
+    print(p_value)
+
+       if (p_value < 0.05){
+         # post hoc
+       }
+
+
+       
     break
     
   } else{
