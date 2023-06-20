@@ -151,17 +151,17 @@ while (run == TRUE){
        Tuk <- realine(prompt = "Czy chcesz wykonac test Tukeya HSD? (y/n)   ")
        if (Tuk == y){
          #post_hoc()
+         run <- FALSE
        }
        else{
-         run = FALSE
+         run <- FALSE
        }
   }
     } else{
-
     print(paste("Bledny numer analizy.", analiza))
     print("Do wyboru masz: (1)T-student, (2)regresja, (3)ANOVA")
     analiza <-  as.integer(readline(prompt = "Jaka analize chcesz przeprowadzic?   "))
-    run = FALSE
+    break
   }
 }
 print("Koniec analizy.")
