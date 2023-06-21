@@ -2,18 +2,26 @@
 Krzysztof Jakubowski  121992
 Hanna Peciak          113752 
 Zygmunt Latyszewicz   121724'
+data <- data.frame(
+  individual = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10),
+  father = c(0, 0, 2, 2, 4, 2, 5, 5, 0, 8),
+  mother = c(0, 0, 1, 0, 3, 3, 6, 6, 0, 9),
+  phenotype = c(103, 106, 98, 101, 106, 93, 93, 107, 105, 109),
+  group = c(1, 1, 1, 2, 2, 2, 2, 2, 1, 1) )
 
 'PROGRAM DO MODELU MIESZANEGO:'
 run <- TRUE
 while (run == TRUE) {
   wybor <-  as.integer(readline(prompt = "Do wyboru masz: (1) efekty stałe i losowe, (2)estymatory modelu, (3)oba"))
-  
   if(wybor == 1) {
     print('Wprowadź dane:')
-    y <- readline(prompt = 'Zmienne zależne')
-    X <- readline(prompt = 'Macierz efektów losowych')
-    Z <-readline(prompt = 'Macierz efektów stałych')
-    A <-readline(prompt = 'Macierz grupowania')
+    y <- as.matrix(data[readline(prompt = 'Zmienne zależne (fenotyp)')])
+    X <- as.matrix(data[readline(prompt = 'Macierz efektów losowych')])
+    Z <-as.matrix(data[readline(prompt = 'Macierz efektów stałych')])
+    
+    prep_A <- cbind(data$individual, data$father, data$mother)
+    A <- as.matrix(prep_A)
+    
     sigma_a <-as.integer(readline(prompt = 'Odchylenie efektów stałych'))
     sigma_e <- as.integer(readline(prompt = 'Odchylenie efektów losowych'))
     
@@ -28,10 +36,13 @@ while (run == TRUE) {
     print("Przeprowadzam analizę estymatorów modelu ")
     
     print('Wprowadź dane:')
-    y <- readline(prompt = 'Zmienne zależne')
-    X <- readline(prompt = 'Macierz efektów losowych')
-    Z <-readline(prompt = 'Macierz efektów stałych')
-    A <-readline(prompt = 'Macierz grupowania')
+    y <- as.matrix(data[readline(prompt = 'Zmienne zależne (fenotyp)')])
+    X <- as.matrix(data[readline(prompt = 'Macierz efektów losowych')])
+    Z <-as.matrix(data[readline(prompt = 'Macierz efektów stałych')])
+    tmp_threshold <- as.integer(readline(prompt = 'Threshold:'))
+    
+    prep_A <- cbind(data$individual, data$father, data$mother)
+    A <- as.matrix(prep_A)
     
     result <- EM(y, X, Z, A, sigma_a, sigma_e,tmp_threshold)
     print(result)  
@@ -40,12 +51,17 @@ while (run == TRUE) {
   } else if (analiza == 3) {
     print("oba elementy ")
     print('Wprowadź dane:')
-    y <- readline(prompt = 'Zmienne zależne')
-    X <- readline(prompt = 'Macierz efektów losowych')
-    Z <-readline(prompt = 'Macierz efektów stałych')
-    A <-readline(prompt = 'Macierz grupowania')
+    y <- as.matrix(data[readline(prompt = 'Zmienne zależne (fenotyp)')])
+    X <- as.matrix(data[readline(prompt = 'Macierz efektów losowych')])
+    Z <-as.matrix(data[readline(prompt = 'Macierz efektów stałych')])
+    tmp_threshold <- as.integer(readline(prompt = 'Threshold:'))
+    
+    prep_A <- cbind(data$individual, data$father, data$mother)
+    A <- as.matrix(prep_A)
+    
     sigma_a <-as.integer(readline(prompt = 'Odchylenie efektów stałych'))
     sigma_e <- as.integer(readline(prompt = 'Odchylenie efektów losowych'))
+    
     result_1 <- mme(y, X, Z, A, sigma_a, sigma_e)
     result_2 <- EM(y, X, Z, A, sigma_a, sigma_e,tmp_threshold)
     
