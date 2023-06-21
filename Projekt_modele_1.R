@@ -21,8 +21,9 @@ attach(data)
 
 # dane z rozkladu normalnego:
 tabelka <- tibble(a = rnorm(30, 16, 4),
-                   b = as_factor(c(rep(0, 10), rep(1, 10), rep(2, 10))))
-#data <- tabelka
+                  b = as_factor(c(rep(0, 10), rep(1, 10), rep(2, 10))),
+                  c = rnorm(30, 12, 6))
+data <- tabelka
 
 #----WYBOR PRZEPROWADZANEJ ANALIZY----------------------------------------------
 
@@ -56,6 +57,7 @@ while (run == TRUE){
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       
       res <- t_test_jedna_niezal(proba, mo, alt)
+      print(res)
       run <- FALSE
       
     } else if(t_stud ==2){
@@ -72,6 +74,7 @@ while (run == TRUE){
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       
       res <- t_test_dwie_niezal(proba_1, proba_2, alt)
+      print(res)
       run <- FALSE
       
     } else {
@@ -88,6 +91,7 @@ while (run == TRUE){
       alt <-readline(prompt = 'Alternatywa? (greater/lesser/none)   ')
       
       res <- t_test_dwie_zal(proba_1, proba_2, alt)
+      print(res)
       run <- FALSE
     }
   } else if (analiza == 2) {
@@ -131,7 +135,7 @@ while (run == TRUE){
     zmienna_grupujaca <- as.matrix(zmienna_grupujaca)
     if_num(data[zmienna_grupujaca[1]])
     
-    #homo_var(zmienna_liczbowa, zmienna_grupujaca)
+    homo_var(zmienna_liczbowa, zmienna_grupujaca)
     
     # wywolanie ANOVY:
     res <- ANOVA(as.matrix(data[zmienna_liczbowa[1]]),as.matrix(data[zmienna_grupujaca[1]]))
